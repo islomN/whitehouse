@@ -6,86 +6,118 @@
             >
                 <md-card>
                     <md-card-header data-background-color="green">
-                        <h4 class="title">Объкты</h4>
-
-                        <button class="btn btn-default" @click="show">Добавить объекты</button>
-                    </md-card-header>
-                    <div data-v-4b6a6881="" class="md-card-content">
-                        <div data-v-4b6a6881=""><div data-v-4b6a6881="" class="md-content md-table md-theme-default" table-header-color="" value="[object Object],[object Object]">
-                            <div class="md-content md-table-content md-scrollbar md-theme-default">
-                                <table>
-                                    <thead>
-                                    <tr><!---->
-                                        <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
-                                            <div class="md-table-head-label">
-
-                                                Наименование объекта
-
-                                                </div>
-                                        </div>
-                                        </th>
-                                        <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
-                                            <div class="md-table-head-label"><!---->
-
-                                                Договор
-
-                                                </div>
-                                        </div>
-                                        </th>
-                                        <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
-                                            <div class="md-table-head-label"><!---->
-
-                                                Заказчик
-
-                                               </div>
-                                        </div>
-                                        </th>
-                                        <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
-                                            <div class="md-table-head-label"><!---->
-
-                                                Стоимость по договору (СМР)
-                                            </div>
-                                        </div>
-                                        </th>
-                                        <th class="md-table-head">
-                                            <div class="md-table-head-container md-ripple md-disabled">
-                                                <div class="md-table-head-label"><!---->
-
-                                                    Дейсвия
-
-                                                 </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr data-v-4b6a6881="" class="md-table-row"><!---->
-                                        <td data-v-4b6a6881="" class="md-table-cell">
-                                            <div class="md-table-cell-container">Test</div>
-                                        </td>
-                                        <td data-v-4b6a6881="" class="md-table-cell">
-                                            <div class="md-table-cell-container">Test</div>
-                                        </td>
-                                        <td data-v-4b6a6881="" class="md-table-cell">
-                                            <div class="md-table-cell-container">Test</div>
-                                        </td>
-                                        <td data-v-4b6a6881="" class="md-table-cell">
-                                            <div class="md-table-cell-container">Test</div>
-                                        </td>
-                                        <td data-v-4b6a6881="" class="md-table-cell">
-                                            <div class="md-table-cell-container">
-                                                <span class=" action orange text-warning">Изменить</span>
-                                            </div>
-                                            <div class="md-table-cell-container">
-
-                                                <span class="action red text-danger">Удалить</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div> <!---->
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                            <h4 class="title">Объкты</h4>
+                            <div class="d-flex align-items-center flex-wrap">
+                                <div>
+                                    <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
+                                                          :auto-close="true"
+                                                          @input="()=> getAllProject()"
+                                                          v-model="form.startTime"
+                                                          :only-date="true"
+                                                          format="YYYY-MM-DD"
+                                                          formatted="YYYY-MM-DD"
+                                                          label="Дата договора"
+                                    />
+                                </div>
+                                <div>
+                                    <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
+                                                          :auto-close="true"
+                                                          @input="()=> getAllProject()"
+                                                          v-model="form.endTime"
+                                                          :only-date="true"
+                                                          format="YYYY-MM-DD"
+                                                          formatted="YYYY-MM-DD"
+                                                          label="Дата договора"
+                                    />
+                                </div>
+                                <div>
+                                    <input v-model="form.description" @input="getAllProject" type="text">
+                                </div>
+                                <div>
+                                    <input v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">
+                                </div>
+                                <div>
+                                    <button class="btn btn-default" @click="show">Добавить объекты</button>
+                                </div>
+                            </div>
                         </div>
+                    </md-card-header>
+                    <div class="md-card-content">
+                        <div >
+                            <div class="md-content md-table md-theme-default" >
+                                <div class="md-content md-table-content md-scrollbar md-theme-default">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="md-table-head">
+                                                <div class="md-table-head-container md-ripple md-disabled">
+                                                    <div class="md-table-head-label">
+                                                        Наименование объекта
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="md-table-head">
+                                                <div class="md-table-head-container md-ripple md-disabled">
+                                                    <div class="md-table-head-label">
+                                                        Договор
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
+                                                <div class="md-table-head-label">
+    
+                                                    Заказчик
+    
+                                                   </div>
+                                            </div>
+                                            </th>
+                                            <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
+                                                <div class="md-table-head-label">
+    
+                                                    Стоимость по договору (СМР)
+                                                </div>
+                                            </div>
+                                            </th>
+                                            <th class="md-table-head">
+                                                <div class="md-table-head-container md-ripple md-disabled">
+                                                    <div class="md-table-head-label">
+    
+                                                        Дейсвия
+    
+                                                     </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="item in projects" class="md-table-row">
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{item.description}}</div>
+                                            </td>
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{item.contractNumber}}</div>
+                                            </td>
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{item.customer}}</div>
+                                            </td>
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{item.contractPrice}}</div>
+                                            </td>
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">
+                                                    <span class=" action orange text-warning">Изменить</span>
+                                                </div>
+                                                <div class="md-table-cell-container">
+    
+                                                    <span class="action red text-danger">Удалить</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </md-card>
@@ -154,9 +186,38 @@
             return {
                 tableHeaderColor: '',
                 activeSection:1,
+                form: {
+                    startTime: null,
+                    endTime: null,
+                    description: '',
+                    userId: null
+                },
+                projects: []
             }
         },
+        created() {
+            this.getAllProject();
+        },
         methods:{
+            eCode(event) {
+                if (isNaN(event.key)) {
+                    event.preventDefault();
+                }
+            },
+            getAllProject() {
+                let form = {...this.form};
+                if (form.userId) {
+                    form.userId = +form.userId;
+                }
+                this.$api.post('/api/Project/GetProjectsByFilter', form).then(
+                    response => {
+                        this.projects = response.data.result.projects
+                    },
+                    error => {
+                        console.log(error.response);
+                    }
+                )
+            },
             show () {
                 this.$modal.show('hello-world');
             },

@@ -1,0 +1,8 @@
+.border-danger{
+    border-color: red!important;
+    border: 1px solid !important;
+}
+.vm--modal {
+    width: 800px!important;
+    overflow-y: auto!important;
+}

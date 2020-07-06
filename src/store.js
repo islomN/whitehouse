@@ -1,52 +1,24 @@
-import Vuex from 'vuex';
 import Vue from 'vue'
-import moment from 'moment';
-
+import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     state: {
-        unreadMessageCountChange: false,
-        localization:{
-            languages: {},
-            locale:{}
-        },
-        highlighted: {
-            dates: [
-                new Date(),
-            ],
-        },
+        isLoading: false,
+        baseUrl: '',
     },
-    actions: {},
-    getters: {
-        getLocale(state){
-            return state.localization.locale;
-        },
-        getErrorLocale(state){
-            return  state.localization.locale.ErrorFront ? state.localization.locale.ErrorFront : {};
-        },
-        getContentLocale(state, key){
-            return state.localization.locale.Content ? state.localization.locale.Content : {};
-        },
-        getLanguages(state){
-            return state.localization.languages;
-        },
-        getPayment(state) {
-            return state.payment
-        }
-    },
-    modules: {},
     mutations: {
-        changeUnreadMessageState(state) {
-            state.unreadMessageCountChange = !state.unreadMessageCountChange;
+        setBaseUrl(state, baseUrl) {
+            state.baseUrl = baseUrl;
         },
-        changeLocale(state, locale){
-            state.localization.locale = locale
-        },
-        changeLanguages(state, languages){
-            state.localization.languages = languages
+        setLoadingStatus(state, status = false) {
+            state.isLoading = status
         }
     },
-    strict: {}
+    getters : {
+    
+    }
 });
+
+export default store;

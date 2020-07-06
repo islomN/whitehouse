@@ -29,7 +29,16 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Дата договора</label>
-                        <md-input v-model="info.contractDate" type="text"></md-input>
+<!--                        <md-input v-model="info.contractDate" type="text"></md-input>-->
+                        <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
+                                              :auto-close="true"
+                                              @input="()=> {}"
+                                              v-model="info.contractDate"
+                                              :only-date="true"
+                                              format="YYYY-MM-DD"
+                                              formatted="YYYY-MM-DD"
+                                              label="Дата договора"
+                        />
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-50">
@@ -41,7 +50,7 @@
                 <div class="md-layout-item md-small-size-100 md-size-50">
                     <md-field>
                         <label>Стоимость по договору (СМР)</label>
-                        <md-input v-model="info.contractPrice" type="text"></md-input>
+                        <md-input @keypress="eCode" v-model="info.contractPrice" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
@@ -59,14 +68,17 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>ПТО</label>
-                        <md-select v-model="info.responsible">
-                            <md-option
-                                    v-for="item in responsibles" v-bind:key="item.id"
-                                    :value="item.id">
+                        <md-select v-model="info.responsible.id">
+                            <md-option v-for="item in responsibles" :key="item.id" :value="item.id">
                                 {{item.fio}}
                             </md-option>
                         </md-select>
                     </md-field>
+                </div>
+                <div class="d-flex align-items-center justify-content-center mt-5 w-100">
+                    <button @click="save" class="btn btn-primary">
+                        Сохранить
+                    </button>
                 </div>
             </div>
         </md-card-content>
@@ -79,30 +91,52 @@
         data() {
             return {
                 info: {
-                    description: null,
-                    shortDescription: "string",
-                    contractNumber: "string",
-                    contractDate: "2020-06-21T10:42:42.394Z",
-                    customer: "string",
-                    contractProvider: "string",
-                    contractPrice: 0,
-                    techSupervision: "string",
-                    techSupervisionPhone: "string",
-                    responsible: {
-                        id: 0
-                    }
+                    description: '',
+                    shortDescription: "",
+                    contractNumber: "",
+                    contractDate: null,
+                    customer: "",
+                    contractProvider: "",
+                    contractPrice: '',
+                    techSupervision: "",
+                    techSupervisionPhone: "",
+                    responsible: {}
                 },
-                responsibles:[
-                    {
-                        "id": 0,
-                        "fio": "string",
-                    },
-                    {
-                        "id":2,
-                        "fio": "123123",
-                    }
-                ]
+                responsibles:[]
             }
+        },
+        created() {
+            this.getAllUser();
+        },
+        methods: {
+            getAllUser() {
+                this.$api.get('/api/User/GetUsers').then(
+                    response => {
+                        this.responsibles = response.data.result.users;
+                    },
+                    error => {
+                        console.log(error.response);
+                    }
+                )
+            },
+            save() {
+                let form = {...this.info};
+                form.contractPrice = +form.contractPrice;
+                form.responsible = this.responsibles.find(item => item.id === form.responsible.id);
+                this.$api.post("/api/Project/AddProject", form).then(
+                    response => {
+                        console.log(response);
+                    },
+                    error => {
+                        console.log(error.response);
+                    }
+                )
+            },
+            eCode(event) {
+                if (isNaN(event.key)) {
+                    event.preventDefault();
+                }
+            },
         }
     }
 </script>
