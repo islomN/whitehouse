@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bdffebda-d61d-463e-9e18-237460dac090" name="Default Changelist" comment="changes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectId" id="1ddhkf6vdC3dErZiDX4kYMMUrwI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="C:\Program Files\nodejs\node_modules\npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="E:\web\vue\templateAdmin\vue-material-dashboard-master\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.HTML" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\PROJECTS\FRONT\whitehousefront\src" />
+      <recent name="E:\web\vue\templateAdmin\vue-material-dashboard-master\src\pages" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="serve" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="serve" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.serve" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bdffebda-d61d-463e-9e18-237460dac090" name="Default Changelist" comment="" />
+      <created>1592039609865</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592039609865</updated>
+      <workItem from="1592039611288" duration="5181000" />
+      <workItem from="1592731299270" duration="888000" />
+      <workItem from="1592732420440" duration="13059000" />
+      <workItem from="1592761023961" duration="661000" />
+      <workItem from="1592761692264" duration="2068000" />
+      <workItem from="1592766440441" duration="2463000" />
+      <workItem from="1592907096898" duration="1117000" />
+      <workItem from="1593194509429" duration="601000" />
+      <workItem from="1593203932890" duration="5000" />
+      <workItem from="1593241020718" duration="3000" />
+      <workItem from="1593262751869" duration="883000" />
+      <workItem from="1593457285029" duration="28000" />
+      <workItem from="1593457399130" duration="7000" />
+      <workItem from="1594047547942" duration="933000" />
+    </task>
+    <task id="LOCAL-00001" summary="changes">
+      <created>1592907202090</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1592907202090</updated>
+    </task>
+    <task id="LOCAL-00002" summary="changes">
+      <created>1592907588772</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592907588772</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="499" y="164" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1592767521347">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="499" y="164" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592767521347" />
+    <state x="548" y="158" key="FileChooserDialogImpl" timestamp="1592761727644">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="548" y="158" key="FileChooserDialogImpl/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592761727644" />
+    <state width="1515" height="156" key="GridCell.Tab.0.bottom" timestamp="1592909333282">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1515" height="64" key="GridCell.Tab.0.bottom/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592769040772" />
+    <state width="1515" height="156" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1592909333282" />
+    <state width="1515" height="156" key="GridCell.Tab.0.center" timestamp="1592909333282">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1515" height="64" key="GridCell.Tab.0.center/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592769040772" />
+    <state width="1515" height="156" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1592909333282" />
+    <state width="1515" height="156" key="GridCell.Tab.0.left" timestamp="1592909333282">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1515" height="64" key="GridCell.Tab.0.left/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592769040771" />
+    <state width="1515" height="156" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1592909333282" />
+    <state width="1515" height="156" key="GridCell.Tab.0.right" timestamp="1592909333282">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1515" height="64" key="GridCell.Tab.0.right/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592769040772" />
+    <state width="1515" height="156" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1592909333282" />
+    <state x="277" y="62" key="SettingsEditor" timestamp="1592762914323">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="277" y="62" key="SettingsEditor/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592762914323" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1592907591389">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1592907591389" />
+    <state x="2013" y="93" width="1350" height="648" key="dock-window-1" timestamp="1592761166328">
+      <screen x="1920" y="0" width="1536" height="834" />
+    </state>
+    <state x="2013" y="93" width="1350" height="648" key="dock-window-1/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592761166328" />
+    <state x="477" y="16" width="581" height="801" key="find.popup" timestamp="1592762040036">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="477" y="16" width="581" height="801" key="find.popup/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592762040036" />
+    <state x="425" y="189" key="run.anything.popup" timestamp="1592761484872">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="425" y="189" key="run.anything.popup/0.0.1536.834/1920.0.1536.834@0.0.1536.834" timestamp="1592761484872" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/ProjectsAdmin.vue</url>
+          <line>137</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/.eslintrc.js</url>
+          <line>7</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
