@@ -24,6 +24,11 @@
           <md-icon>person</md-icon>
         <p>Пользователи</p>
       </sidebar-link>
+        
+        <sidebar-link to="/file-categories">
+            <md-icon>file</md-icon>
+            <p>Категории Файлов</p>
+        </sidebar-link>
         <!--  <sidebar-link to="/typography">
    &lt;!&ndash;        <md-icon>library_books</md-icon>&ndash;&gt;
            <p>Typography</p>

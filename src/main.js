@@ -7,6 +7,7 @@ import VueAxios from 'vue-axios';
 import Vuelidate from 'vuelidate';
 import VueMoment from 'vue-moment';
 import Paginate from 'vuejs-paginate';
+import {IMaskComponent} from 'vue-imask';
 import NumberFormat from './mixins/numerralFormat';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
@@ -59,15 +60,25 @@ Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(Vuelidate);
 Vue.use(VueMoment);
+Vue.component('imask-input', IMaskComponent);
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 Vue.component('paginate', Paginate);
 Vue.mixin(NumberFormat);
 
+Vue.mixin({
+  methods: {
+    isAdmin() {
+      let userId = localStorage.getItem('userType');
+      return userId == 1;
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
   render: h => h(App),
+  store,
   router,
   data: {
     Chartist: Chartist

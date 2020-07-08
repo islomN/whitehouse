@@ -8,6 +8,7 @@ import Login from "@/pages/Login/index.vue";
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import Projects from "@/pages/Projects";
+import FileCategories from "@/pages/FileCategories";
 import ProjectsAdmin from "@/pages/ProjectsAdmin";
 
 Vue.use(Router);
@@ -39,6 +40,11 @@ const router = new Router({
 					path: "project",
 					name: "User",
 					component: Projects
+				},
+				{
+					path: "file-categories",
+					name: "file-categories",
+					component: FileCategories
 				}
 			]
 		},

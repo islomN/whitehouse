@@ -5,25 +5,25 @@
                 <div class="md-layout-item md-small-size-100 md-size-66">
                     <md-field>
                         <label>Наименование объекта</label>
-                        <md-input v-model="info.description" type="text"></md-input>
+                        <md-input v-model="info.description" :class="{'border-danger': $v.info.description.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>В кратце</label>
-                        <md-input v-model="info.shortDescription" type="text"></md-input>
+                        <md-input v-model="info.shortDescription" :class="{'border-danger': $v.info.shortDescription.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Заказчик</label>
-                        <md-input v-model="info.customer" type="text"></md-input>
+                        <md-input v-model="info.customer" :class="{'border-danger': $v.info.customer.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Номер договора</label>
-                        <md-input v-model="info.contractNumber" type="text"></md-input>
+                        <md-input v-model="info.contractNumber" :class="{'border-danger': $v.info.contractNumber.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
@@ -31,6 +31,7 @@
                         <label>Дата договора</label>
 <!--                        <md-input v-model="info.contractDate" type="text"></md-input>-->
                         <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
+                                              :class="{'border-danger': $v.info.contractDate.$error}"
                                               :auto-close="true"
                                               @input="()=> {}"
                                               v-model="info.contractDate"
@@ -44,31 +45,41 @@
                 <div class="md-layout-item md-small-size-100 md-size-50">
                     <md-field>
                         <label>Подрядная организация</label>
-                        <md-input v-model="info.contractProvider" type="text"></md-input>
+                        <md-input v-model="info.contractProvider" :class="{'border-danger': $v.info.contractProvider.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-50">
                     <md-field>
                         <label>Стоимость по договору (СМР)</label>
-                        <md-input @keypress="eCode" v-model="info.contractPrice" type="text"></md-input>
+                        <md-input @keypress="eCode" v-model="info.contractPrice" :class="{'border-danger': $v.info.contractPrice.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Тех Надзор</label>
-                        <md-input v-model="info.techSupervision" type="text"></md-input>
+                        <md-input v-model="info.techSupervision" :class="{'border-danger': $v.info.techSupervision.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Тел номер</label>
-                        <md-input v-model="info.techSupervisionPhone" type="text"></md-input>
+<!--                        <imask-input-->
+<!--                            :mask="$store.state.masks.phone"-->
+<!--                            :class="{'border-danger': $v.info.techSupervisionPhone.$error}"-->
+<!--                            radix="."-->
+<!--                            v-model="info.techSupervisionPhone"-->
+<!--                            type="tel"-->
+<!--                            :unmask="true"-->
+<!--                            autocomplete="off"-->
+<!--                            class="md-input"-->
+<!--                        />-->
+                        <md-input v-model="info.techSupervisionPhone" :class="{'border-danger': $v.info.techSupervisionPhone.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>ПТО</label>
-                        <md-select v-model="info.responsible.id">
+                        <md-select v-model="info.responsible.id" :class="{'border-danger': $v.info.responsible.id.$error}">
                             <md-option v-for="item in responsibles" :key="item.id" :value="item.id">
                                 {{item.fio}}
                             </md-option>
@@ -86,6 +97,7 @@
 </template>
 
 <script>
+    import {required} from 'vuelidate/lib/validators';
     export default {
         name: "MainSection",
         data() {
@@ -105,6 +117,22 @@
                 responsibles:[]
             }
         },
+        validations: {
+            info: {
+                description: {required},
+                shortDescription: {required},
+                contractNumber: {required},
+                contractDate: {required},
+                customer: {required},
+                contractProvider: {required},
+                contractPrice: {required},
+                techSupervision: {required},
+                techSupervisionPhone: {required},
+                responsible: {
+                    id: {required}
+                }
+            },
+        },
         created() {
             this.getAllUser();
         },
@@ -120,6 +148,10 @@
                 )
             },
             save() {
+                this.$v.info.$touch()
+                if (this.$v.info.$invalid) {
+                    return
+                }
                 let form = {...this.info};
                 form.contractPrice = +form.contractPrice;
                 form.responsible = this.responsibles.find(item => item.id === form.responsible.id);

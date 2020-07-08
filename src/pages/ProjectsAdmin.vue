@@ -106,10 +106,9 @@
                                             </td>
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">
-                                                    <span class=" action orange text-warning">Изменить</span>
+                                                    <span @click="openProjectInfoSection(item.id, $event)" class="action orange text-warning">Посмотреть</span>
                                                 </div>
-                                                <div class="md-table-cell-container">
-    
+                                                <div v-if="isAdmin()" class="md-table-cell-container">
                                                     <span class="action red text-danger">Удалить</span>
                                                 </div>
                                             </td>
@@ -164,6 +163,17 @@
 
             </div>
         </modal>
+    
+        <modal name="projectInfoModal" :adaptive="true" width="50%" height="80%">
+            <div class="object-form-section">
+                <div class="sections">
+                    <ProjectInfo :info="info" />
+                </div>
+            </div>
+            <div class="footer">
+        
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -173,6 +183,7 @@
     import PlanAchivievementsSectionComponent from './Components/PlanAchivievementsSection'
     import FactExpensessSectionComponent from './Components/FactExpensessSection'
     import ProjectNotesSectionComponent from './Components/ProjectNotesSection'
+    import ProjectInfo from './Components/ProjectInfo'
     export default {
         name: "Projects",
         components:{
@@ -180,7 +191,8 @@
             FactAchievementsSectionComponent,
             PlanAchivievementsSectionComponent,
             FactExpensessSectionComponent,
-            ProjectNotesSectionComponent
+            ProjectNotesSectionComponent,
+            ProjectInfo
         },
         data(){
             return {
@@ -192,7 +204,20 @@
                     description: '',
                     userId: null
                 },
-                projects: []
+                projects: [],
+    
+                info: {
+                    description: '',
+                    shortDescription: "",
+                    contractNumber: "",
+                    contractDate: null,
+                    customer: "",
+                    contractProvider: "",
+                    contractPrice: '',
+                    techSupervision: "",
+                    techSupervisionPhone: "",
+                    responsible: {}
+                },
             }
         },
         created() {
@@ -239,6 +264,18 @@
             openProjectNotesSection(){
                 this.projectNotesSection = true
             },
+            openProjectInfoSection(id){
+                
+                this.$api.get('/api/Project/GetProject/' + id).then(
+                    res => {
+                        this.info = res.data.result;
+                        this.$modal.show('projectInfoModal');
+                    },
+                    err => {
+                        console.log(err.response);
+                    }
+                )
+            },
         },
         computed:{
 
@@ -281,7 +318,7 @@
                 set(val){
                     return this.activeSection = val ? 5 : 0;
                 }
-            },
+            }
 
         }
     }
