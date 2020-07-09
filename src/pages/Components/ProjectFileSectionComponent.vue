@@ -11,10 +11,10 @@
 					<div class="col-6">
 						<div class="row">
 							<div class="col-6">
-								<input v-model="form.name" :class="{'border-danger': $v.form.name.$error}" class="form-control" type="text">
+								<input v-model="form.name" :class="{'border-danger':!form.name && touched}" class="form-control" type="text">
 							</div>
 							<div class="col-6">
-								<select v-model="form.FileCategoryInfo.id" :class="{'border-danger': $v.form.FileCategoryInfo.id.$error}" class="form-control">
+								<select v-model="form.FileCategoryInfo.id" :class="{'border-danger': !form.FileCategoryInfo.id && touched}" class="form-control">
 									<option v-for="item in list" :value="item.id">
 										{{item.name}}
 									</option>
@@ -57,37 +57,18 @@
 										</div>
 									</div>
 								</th>
-								<th class="md-table-head">
-									<div class="md-table-head-container md-ripple md-disabled">
-										<div class="md-table-head-label">
-											Заказчик
-										</div>
-									</div>
-								</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr v-for="item in files" class="md-table-row">
+							<tr v-for="item in info.files" class="md-table-row">
 								<td class="md-table-cell">
-									<div class="md-table-cell-container">{{item.description}}</div>
+									<div class="md-table-cell-container">{{item.name}}</div>
 								</td>
 								<td class="md-table-cell">
-									<div class="md-table-cell-container">{{item.contractNumber}}</div>
+									<div class="md-table-cell-container">
+										<a :href="item.url" download>Скачать</a>
+									</div>
 								</td>
-								<td class="md-table-cell">
-									<div class="md-table-cell-container">{{item.customer}}</div>
-								</td>
-								<td class="md-table-cell">
-									<div class="md-table-cell-container">{{item.contractPrice}}</div>
-								</td>
-<!--								<td class="md-table-cell">-->
-<!--									<div class="md-table-cell-container">-->
-<!--										<span @click="openProjectInfoSection(item.id, $event)" class="action orange text-warning">Посмотреть</span>-->
-<!--									</div>-->
-<!--									<div v-if="isAdmin()" class="md-table-cell-container">-->
-<!--										<span class="action red text-danger">Удалить</span>-->
-<!--									</div>-->
-<!--								</td>-->
 							</tr>
 							</tbody>
 						</table>
@@ -99,12 +80,13 @@
 </template>
 
 <script>
-	import {required} from 'vuelidate/lib/validators';
 	export default {
 		name: "ProjectFileSectionComponent",
-		props: ['info', 'files'],
+		props: ['info', 'openProjectInfoSection'],
 		data() {
 			return{
+				touched: false,
+				cleanForm: {},
 				form: {
 					name: '',
 					ProjectId: this.info.id,
@@ -118,14 +100,6 @@
 		},
 		created() {
 			this.getFileCategoryList();
-		},
-		validations: {
-			form: {
-				name: [required],
-				FileCategoryInfo: {
-					id: {required}
-				}
-			}
 		},
 		methods: {
 			getFileCategoryList() {
@@ -144,23 +118,25 @@
 				this.selectedFile = files[0];
 			},
 			save() {
-				this.$v.form.$touch();
-				if (this.$v.form.$error) {
+				this.touched = true;
+				if (!this.form.name || !this.form.FileCategoryInfo.id) {
 					return
 				}
 				let data = new FormData()
 				let obj = {
-					ProjectFileInfo: this.form,
+					ProjectFileInfo: JSON.stringify(this.form),
 					file: this.selectedFile
 				};
 				for (const key in obj) {
 					data.append(key, obj[key])
 				}
-				console.log(1);
-				return
 				this.$api.post('/api/Project/AddProjectFile', data).then(
 					res => {
-						console.log(res);
+						this.form.name = '';
+						this.form.FileCategoryInfo.id = null;
+						this.selectedFile = {};
+						this.touched = false;
+						this.openProjectInfoSection(this.info.id);
 					},
 					err => {
 						console.log(err.response);

@@ -198,7 +198,11 @@
                 </ul>
                 <div class="sections">
                     <ProjectInfo :info="info" v-if="mainSection" />
-                    <ProjectFileSectionComponent :info="info" :files="[]" v-else-if="fileSection" />
+                    <ProjectFileSectionComponent
+                        :info="info"
+                        :openProjectInfoSection="openProjectInfoSection"
+                        v-else-if="fileSection"
+                    />
                     <fact-achievements-section-component v-else-if="factAchievementsSection"></fact-achievements-section-component>
                     <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
                     <fact-achievements-section-component v-else-if="factExpensessSection"></fact-achievements-section-component>
