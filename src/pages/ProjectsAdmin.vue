@@ -166,8 +166,43 @@
     
         <modal name="projectInfoModal" :adaptive="true" width="50%" height="80%">
             <div class="object-form-section">
+                <ul class="nav nav-pills nav-fill object-form-items">
+                    <li class="nav-item"  @click="openMainSection">
+                        <a class="nav-link" :class="{'active': mainSection}">
+                            Главные информации
+                        </a>
+                    </li>
+                    <li class="nav-item" @click="openFileSection">
+                        <a class="nav-link" :class="{'active': fileSection}">
+                            Файлы
+                        </a>
+                    </li>
+                    <li class="nav-item" @click="openFactAchievementsSection">
+                        <a class="nav-link" :class="{'active': factAchievementsSection}">
+                            Факт оплаты
+                        </a>
+                    </li>
+                    <li class="nav-item" @click="openPlanAchievementsSection">
+                        <a class="nav-link"  :class="{'active': planAchievementsSection}">
+                            Факт расход
+                        </a>
+                    </li>
+                    <li class="nav-item" @click="openFactExpensessSection">
+                        <a class="nav-link" :class="{'active': factExpensessSection}">Факт выполнения</a>
+                    </li>
+                    <li class="nav-item" @click="openProjectNotesSection">
+                        <a class="nav-link " :class="{'active': projectNotesSection}">
+                            План выполнения
+                        </a>
+                    </li>
+                </ul>
                 <div class="sections">
-                    <ProjectInfo :info="info" />
+                    <ProjectInfo :info="info" v-if="mainSection" />
+                    <ProjectFileSectionComponent :info="info" :files="[]" v-else-if="fileSection" />
+                    <fact-achievements-section-component v-else-if="factAchievementsSection"></fact-achievements-section-component>
+                    <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
+                    <fact-achievements-section-component v-else-if="factExpensessSection"></fact-achievements-section-component>
+                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>
                 </div>
             </div>
             <div class="footer">
@@ -179,6 +214,7 @@
 
 <script>
     import MainSectionComponent from './Components/MainSection'
+    import ProjectFileSectionComponent from './Components/ProjectFileSectionComponent'
     import FactAchievementsSectionComponent from './Components/FactAchievementsSection'
     import PlanAchivievementsSectionComponent from './Components/PlanAchivievementsSection'
     import FactExpensessSectionComponent from './Components/FactExpensessSection'
@@ -188,6 +224,7 @@
         name: "Projects",
         components:{
             MainSectionComponent,
+            ProjectFileSectionComponent,
             FactAchievementsSectionComponent,
             PlanAchivievementsSectionComponent,
             FactExpensessSectionComponent,
@@ -251,6 +288,9 @@
             },
             openMainSection(){
                 this.mainSection = true
+            },
+            openFileSection(){
+                this.fileSection = true
             },
             openFactAchievementsSection(){
                 this.factAchievementsSection = true
@@ -317,6 +357,14 @@
                 },
                 set(val){
                     return this.activeSection = val ? 5 : 0;
+                }
+            },
+            fileSection:{
+                get(){
+                    return this.activeSection === 6
+                },
+                set(val){
+                    return this.activeSection = val ? 6 : 0;
                 }
             }
 
