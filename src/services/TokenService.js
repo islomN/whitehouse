@@ -12,7 +12,6 @@ const TokenService = {
 	},
 	removeToken(axiosInstance) {
 		localStorage.removeItem(TOKEN_KEY);
-		delete axiosInstance.defaults.headers.common.Authorization;
 	},
 	
 	saveRefreshToken(token) {

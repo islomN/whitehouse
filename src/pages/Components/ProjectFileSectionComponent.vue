@@ -84,7 +84,7 @@
 <!--									<div class="md-table-cell-container">-->
 <!--										<span @click="openProjectInfoSection(item.id, $event)" class="action orange text-warning">Посмотреть</span>-->
 <!--									</div>-->
-<!--									<div v-if="isAdmin()" class="md-table-cell-container">-->
+<!--									<div v-if="isAdmin" class="md-table-cell-container">-->
 <!--										<span class="action red text-danger">Удалить</span>-->
 <!--									</div>-->
 <!--								</td>-->

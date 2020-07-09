@@ -9,56 +9,22 @@
       <mobile-menu slot="content"></mobile-menu>
       <sidebar-link to="/dashboard">
         <md-icon>dashboard</md-icon>
-        <p>Главная страница</p>
+        <p>Объкты</p>
       </sidebar-link>
-      <sidebar-link to="/project-admin">
-          <md-icon>bubble_chart</md-icon>
-        <p>Объекты Admin</p>
-      </sidebar-link>
-
-    <sidebar-link to="/project">
+    <sidebar-link v-if="isAdmin" to="/user">
         <md-icon>bubble_chart</md-icon>
-        <p>Объекты User</p>
-    </sidebar-link>
-     <sidebar-link to="/user">
-          <md-icon>person</md-icon>
         <p>Пользователи</p>
-      </sidebar-link>
-        
-        <sidebar-link to="/file-categories">
-            <md-icon>file</md-icon>
-            <p>Категории Файлов</p>
-        </sidebar-link>
-        <!--  <sidebar-link to="/typography">
-   &lt;!&ndash;        <md-icon>library_books</md-icon>&ndash;&gt;
-           <p>Typography</p>
-         </sidebar-link>
-         <sidebar-link to="/icons">
-           <md-icon>bubble_chart</md-icon>
-           <p>Icons</p>
-         </sidebar-link>
-         <sidebar-link to="/maps">
-           <md-icon>location_on</md-icon>
-           <p>Maps</p>
-         </sidebar-link>
-         <sidebar-link to="/notifications">
-           <md-icon>notifications</md-icon>
-           <p>Notifications</p>
-         </sidebar-link>
-         <sidebar-link to="/upgrade" class="active-pro">
-           <md-icon>unarchive</md-icon>
-           <p>Upgrade to PRO</p>
-         </sidebar-link>-->
+    </sidebar-link>
+
+    <sidebar-link v-if="isAdmin" to="/file-categories">
+        <md-icon>bubble_chart</md-icon>
+        <p>Категории Файлов</p>
+    </sidebar-link>
+
     </side-bar>
 
     <div class="main-panel">
       <top-navbar></top-navbar>
-
-      <fixed-plugin
-        :color.sync="sidebarBackground"
-        :image.sync="sidebarBackgroundImage"
-      >
-      </fixed-plugin>
 
       <dashboard-content> </dashboard-content>
 
@@ -72,7 +38,6 @@ import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "@/pages/Layout/MobileMenu.vue";
-import FixedPlugin from "./Extra/FixedPlugin.vue";
 
 export default {
   components: {
@@ -80,7 +45,6 @@ export default {
     DashboardContent,
     ContentFooter,
     MobileMenu,
-    FixedPlugin
   },
   data() {
     return {

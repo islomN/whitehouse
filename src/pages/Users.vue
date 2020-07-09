@@ -7,8 +7,8 @@
                 <md-card>
                     <md-card-header data-background-color="green">
                         <div class="d-flex flex-wrap align-items-center justify-content-between">
-                            <h4 class="title">Объкты</h4>
-                            <button @click="addEditUser" class="btn btn-primary">
+                            <h4 class="title">Пользователи</h4>
+                            <button @click="addEditUser" class="btn btn-default">
                                 Добавить
                             </button>
                         </div>
@@ -26,7 +26,7 @@
                                         <div class="md-table-cell-container mr-2">
                                             <span @click="addEditUser(item)" class="action orange text-warning">Редактировать</span>
                                         </div>
-                                        <div v-if="isAdmin()" class="md-table-cell-container">
+                                        <div v-if="isAdmin" class="md-table-cell-container">
                                             <span class="action red text-danger">Удалить</span>
                                         </div></md-table-cell>
                                 </md-table-row>
@@ -122,6 +122,9 @@
             }
         },
         created() {
+            if(!this.isAdmin){
+                this.$router.push("/dashboard")
+            }
             this.cleanForm = {...this.form};
             this.getAllUser();
         },
@@ -176,5 +179,8 @@
 </script>
 
 <style scoped>
-
+    .btn-default{
+        background: white;
+        color: #2fbf00;
+    }
 </style>

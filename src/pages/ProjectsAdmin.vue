@@ -8,7 +8,7 @@
                     <md-card-header data-background-color="green">
                         <div class="d-flex flex-wrap justify-content-between align-items-center">
                             <h4 class="title">Объкты</h4>
-                            <div class="d-flex align-items-center flex-wrap">
+                            <div class="d-flex align-items-center flex-wrap search-section">
                                 <div>
                                     <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
                                                           :auto-close="true"
@@ -17,7 +17,7 @@
                                                           :only-date="true"
                                                           format="YYYY-MM-DD"
                                                           formatted="YYYY-MM-DD"
-                                                          label="Дата договора"
+                                                          label="Дата от"
                                     />
                                 </div>
                                 <div>
@@ -28,16 +28,16 @@
                                                           :only-date="true"
                                                           format="YYYY-MM-DD"
                                                           formatted="YYYY-MM-DD"
-                                                          label="Дата договора"
+                                                          label="Дата до"
                                     />
                                 </div>
                                 <div>
-                                    <input v-model="form.description" @input="getAllProject" type="text">
+                                    <input class="form-control" v-model="form.description" @input="getAllProject" type="text">
                                 </div>
                                 <div>
-                                    <input v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">
+                                    <input class="form-control" v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">
                                 </div>
-                                <div>
+                                <div v-if="isAdmin">
                                     <button class="btn btn-default" @click="show">Добавить объекты</button>
                                 </div>
                             </div>
@@ -51,6 +51,13 @@
                                         <thead>
                                         <tr>
                                             <th class="md-table-head">
+                                                <div class="md-table-head-container md-ripple md-disabled">
+                                                    <div class="md-table-head-label">
+                                                        №
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="md-table-head w-60">
                                                 <div class="md-table-head-container md-ripple md-disabled">
                                                     <div class="md-table-head-label">
                                                         Наименование объекта
@@ -91,9 +98,12 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="item in projects" class="md-table-row">
+                                        <tr v-for="(item,i) in projects" class="md-table-row">
                                             <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{item.description}}</div>
+                                                <div class="md-table-cell-container">{{i+1}} </div>
+                                            </td>
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{item.description}} </div>
                                             </td>
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">{{item.contractNumber}}</div>
@@ -102,14 +112,11 @@
                                                 <div class="md-table-cell-container">{{item.customer}}</div>
                                             </td>
                                             <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{item.contractPrice}}</div>
+                                                <div class="md-table-cell-container">{{numeralFormat(item.contractPrice)}}</div>
                                             </td>
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">
-                                                    <span @click="openProjectInfoSection(item.id, $event)" class="action orange text-warning">Посмотреть</span>
-                                                </div>
-                                                <div v-if="isAdmin()" class="md-table-cell-container">
-                                                    <span class="action red text-danger">Удалить</span>
+                                                    <span @click="openProjectInfoSection(item.id, $event)" class="action green text-info">Посмотреть</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -123,7 +130,7 @@
             </div>
         </div>
 
-        <modal name="hello-world" :adaptive="true" width="50%" height="80%">
+        <modal name="projectMainInfo" :adaptive="true" width="50%" height="80%">
             <div class="object-form-section">
                 <ul class="nav nav-pills nav-fill object-form-items">
                     <li class="nav-item"  @click="openMainSection">
@@ -131,32 +138,10 @@
                             Главные информации
                         </a>
                     </li>
-                    <li class="nav-item" @click="openFactAchievementsSection">
-                        <a class="nav-link" :class="{'active': factAchievementsSection}">
-                            Факт оплаты
-                        </a>
-                    </li>
-                    <li class="nav-item" @click="openPlanAchievementsSection">
-                        <a class="nav-link"  :class="{'active': planAchievementsSection}">
-                            Факт расход
-                        </a>
-                    </li>
-                    <li class="nav-item" @click="openFactExpensessSection">
-                        <a class="nav-link" :class="{'active': factExpensessSection}">Факт выполнения</a>
-                    </li>
-                    <li class="nav-item" @click="openProjectNotesSection">
-                        <a class="nav-link " :class="{'active': projectNotesSection}">
-                            План выполнения
-                        </a>
-                    </li>
                 </ul>
 
                 <div class="sections">
-                    <main-section-component v-if="mainSection"></main-section-component>
-                    <fact-achievements-section-component v-else-if="factAchievementsSection"></fact-achievements-section-component>
-                    <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
-                    <fact-achievements-section-component v-else-if="factExpensessSection"></fact-achievements-section-component>
-                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>
+                    <main-section-component @switching-modal="switchingModal" v-if="mainSection"></main-section-component>
                 </div>
             </div>
             <div class="footer">
@@ -177,38 +162,44 @@
                             Файлы
                         </a>
                     </li>
-                    <li class="nav-item" @click="openFactAchievementsSection">
-                        <a class="nav-link" :class="{'active': factAchievementsSection}">
+                    <li class="nav-item" @click="openFactPaysSection">
+                        <a class="nav-link" :class="{'active': factPaysSection}">
                             Факт оплаты
+                        </a>
+                    </li>
+                    <li class="nav-item" @click="openFactExpensesSection">
+                        <a class="nav-link" :class="{'active': factExpensessSection}">
+                            Факт Расходы
                         </a>
                     </li>
                     <li class="nav-item" @click="openPlanAchievementsSection">
                         <a class="nav-link"  :class="{'active': planAchievementsSection}">
-                            Факт расход
+                            План выполнения
                         </a>
                     </li>
-                    <li class="nav-item" @click="openFactExpensessSection">
-                        <a class="nav-link" :class="{'active': factExpensessSection}">Факт выполнения</a>
-                    </li>
-                    <li class="nav-item" @click="openProjectNotesSection">
-                        <a class="nav-link " :class="{'active': projectNotesSection}">
-                            План выполнения
+                    <li class="nav-item" @click="openFactAchievementsSection">
+                        <a class="nav-link" :class="{'active':factAchievementsSection }">
+                            Факт выполнения
                         </a>
                     </li>
                 </ul>
                 <div class="sections">
-                    <ProjectInfo :info="info" v-if="mainSection" />
+                    <ProjectInfo :info="info"  v-if="mainSection" />
                     <ProjectFileSectionComponent :info="info" :files="[]" v-else-if="fileSection" />
-                    <fact-achievements-section-component v-else-if="factAchievementsSection"></fact-achievements-section-component>
+                    <FactPaysComponent :info="info" v-else-if="factPaysSection" />
+                    <FactExpensessSectionComponent :info="info" v-else-if="factExpensessSection"></FactExpensessSectionComponent>
                     <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
-                    <fact-achievements-section-component v-else-if="factExpensessSection"></fact-achievements-section-component>
-                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>
+                    <fact-achievements-section-component v-else-if="factAchievementsSection"></fact-achievements-section-component>
+<!--                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>-->
                 </div>
             </div>
             <div class="footer">
         
             </div>
         </modal>
+
+        <vue-snotify></vue-snotify>
+
     </div>
 </template>
 
@@ -220,6 +211,7 @@
     import FactExpensessSectionComponent from './Components/FactExpensessSection'
     import ProjectNotesSectionComponent from './Components/ProjectNotesSection'
     import ProjectInfo from './Components/ProjectInfo'
+    import FactPaysComponent from './Components/FactPaysSection'
     export default {
         name: "Projects",
         components:{
@@ -229,6 +221,7 @@
             PlanAchivievementsSectionComponent,
             FactExpensessSectionComponent,
             ProjectNotesSectionComponent,
+            FactPaysComponent,
             ProjectInfo
         },
         data(){
@@ -258,6 +251,7 @@
             }
         },
         created() {
+            this.errorNotifyMini("asdas")
             this.getAllProject();
         },
         methods:{
@@ -281,10 +275,18 @@
                 )
             },
             show () {
-                this.$modal.show('hello-world');
+                this.openMainSection()
+                this.$modal.show('projectMainInfo');
             },
             hide () {
-                this.$modal.hide('hello-world');
+                this.$modal.hide('projectMainInfo');
+            },
+            switchingModal(info){
+                this.$modal.hide('projectMainInfo');
+                this.info = info;
+                this.$modal.show('projectInfoModal');
+                this.getAllProject()
+
             },
             openMainSection(){
                 this.mainSection = true
@@ -292,13 +294,16 @@
             openFileSection(){
                 this.fileSection = true
             },
+            openFactPaysSection(){
+                this.factPaysSection = true
+            },
             openFactAchievementsSection(){
                 this.factAchievementsSection = true
             },
             openPlanAchievementsSection(){
                 this.planAchievementsSection = true
             },
-            openFactExpensessSection(){
+            openFactExpensesSection(){
                 this.factExpensessSection = true
             },
             openProjectNotesSection(){
@@ -309,6 +314,7 @@
                 this.$api.get('/api/Project/GetProject/' + id).then(
                     res => {
                         this.info = res.data.result;
+                        this.openMainSection()
                         this.$modal.show('projectInfoModal');
                     },
                     err => {
@@ -316,6 +322,7 @@
                     }
                 )
             },
+
         },
         computed:{
 
@@ -366,7 +373,15 @@
                 set(val){
                     return this.activeSection = val ? 6 : 0;
                 }
-            }
+            },
+            factPaysSection:{
+                get(){
+                    return this.activeSection === 7;
+                },
+                set(val){
+                    return this.activeSection = val ? 7 : 0;
+                }
+            },
 
         }
     }
@@ -396,8 +411,8 @@
     .action.red:hover {
         background: red;
     }
-    .action.orange:hover{
-        background:  orange;
+    .action.green:hover{
+        background:  #62b866;
     }
     .object-form-section{
         width: 100%;
@@ -406,5 +421,25 @@
     }
     .object-form-items a{
         cursor: pointer;
+    }
+    .search-section > div{
+        margin-left: 10px;
+    }
+    .form-control{
+        height: 42px;
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: #3d8c40;
+    }
+     .nav-pills:not(.nav-pills-icons) > li > a {
+         border-radius: 3px;
+     }
+    .md-theme-default a:not(.md-button) {
+        color:  #3d8c40;
+    }
+    .w-60{
+        width: 60%;
     }
 </style>

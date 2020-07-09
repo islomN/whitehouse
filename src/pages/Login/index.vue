@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex align-items-center justify-content-center flex-wrap" style="min-height: 100vh">
+	<div class="d-flex align-items-center justify-content-center flex-wrap login-bg" style="min-height: 100vh">
 		<form @submit.prevent="sendForm" class="myForm">
 			<div class="form-group">
 				<label for="name">Login</label>
@@ -62,7 +62,8 @@
 						this.$router.push('/')
 					},
 					error => {
-						console.log(error.response);
+					    this.errorNotify(error.response.data.error.errorMessage)
+						console.log(error.response.data.error.errorMessage);
 					}
 				)
 			}
@@ -73,9 +74,14 @@
 <style scoped>
 .myForm{
 	width: 500px;
-	border: 1px solid #595959;
+	box-shadow: 0 0 0 10px #fff;
 	padding: 20px;
-	border-radius: 20px;
-	
+	border-radius: 5px;
+    background: white;
+}
+
+.login-bg{
+    background-image: url("/img/sidebar-2.32103624.jpg");
+    background-size: cover;
 }
 </style>

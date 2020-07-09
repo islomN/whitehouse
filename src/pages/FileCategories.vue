@@ -7,10 +7,10 @@
 				<md-card>
 					<md-card-header data-background-color="green">
 						<div class="d-flex flex-wrap align-items-center justify-content-between">
-							<h4 class="title">Объкты</h4>
+							<h4 class="title">Категории Файлов</h4>
 							<form @submit.prevent="save" class="d-flex align-items-center">
 								<input v-model="name" type="text" class="form-control mr-2">
-								<button type="submit" class="btn btn-primary">
+								<button type="submit" class="btn btn-default">
 									Добавить
 								</button>
 							</form>
@@ -48,6 +48,9 @@
 			name: {required}
 		},
 		created() {
+            if(!this.isAdmin){
+                this.$router.push("/dashboard")
+            }
 			this.getFileCategoryList();
 		},
 		methods: {
@@ -72,8 +75,8 @@
 						this.name = '';
 						this.$v.$reset();
 					},
-					err => {
-						console.log(err.response);
+                    error => {
+                        this.errorNotify(error.response.data.error.errorMessage)
 					}
 				)
 			}
@@ -82,5 +85,8 @@
 </script>
 
 <style scoped>
-
+    .btn-default{
+        background: white;
+        color: #2fbf00;
+    }
 </style>

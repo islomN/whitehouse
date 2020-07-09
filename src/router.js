@@ -1,15 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import TokenService from './services/TokenService';
-
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 import Login from "@/pages/Login/index.vue";
-
-import Dashboard from "@/pages/Dashboard.vue";
-import UserProfile from "@/pages/UserProfile.vue";
-import Projects from "@/pages/Projects";
 import FileCategories from "@/pages/FileCategories";
 import ProjectsAdmin from "@/pages/ProjectsAdmin";
+import Users from "./pages/Users";
 
 Vue.use(Router);
 const router = new Router({
@@ -21,29 +17,20 @@ const router = new Router({
 			component: DashboardLayout,
 			redirect: "/dashboard",
 			children: [
+
 				{
 					path: "dashboard",
-					name: "Dashboard",
-					component: Dashboard
-				},
-				{
-					path: "user",
-					name: "User Profile",
-					component: UserProfile
-				},
-				{
-					path: "project-admin",
-					name: "Admin",
+					name: "Объекты",
 					component: ProjectsAdmin
 				},
 				{
-					path: "project",
-					name: "User",
-					component: Projects
+					path: "user",
+					name: "Пользователи",
+					component: Users
 				},
 				{
 					path: "file-categories",
-					name: "file-categories",
+					name: "Категории Файлов",
 					component: FileCategories
 				}
 			]

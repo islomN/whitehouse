@@ -4,31 +4,31 @@
             <div class="md-layout">
                 <div class="md-layout-item md-small-size-100 md-size-66">
                     <md-field>
-                        <label>Наименование объекта</label>
+                        <label>Наименование объекта *</label>
                         <md-input v-model="info.description" :class="{'border-danger': $v.info.description.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>В кратце</label>
-                        <md-input v-model="info.shortDescription" :class="{'border-danger': $v.info.shortDescription.$error}" type="text"></md-input>
+                        <md-input v-model="info.shortDescription"  type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
-                        <label>Заказчик</label>
+                        <label>Заказчик *</label>
                         <md-input v-model="info.customer" :class="{'border-danger': $v.info.customer.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
-                        <label>Номер договора</label>
+                        <label>Номер договора *</label>
                         <md-input v-model="info.contractNumber" :class="{'border-danger': $v.info.contractNumber.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
-                        <label>Дата договора</label>
+                        <label>Дата договора *</label>
 <!--                        <md-input v-model="info.contractDate" type="text"></md-input>-->
                         <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
                                               :class="{'border-danger': $v.info.contractDate.$error}"
@@ -44,41 +44,31 @@
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-50">
                     <md-field>
-                        <label>Подрядная организация</label>
+                        <label>Подрядная организация *</label>
                         <md-input v-model="info.contractProvider" :class="{'border-danger': $v.info.contractProvider.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-50">
                     <md-field>
-                        <label>Стоимость по договору (СМР)</label>
-                        <md-input @keypress="eCode" v-model="info.contractPrice" :class="{'border-danger': $v.info.contractPrice.$error}" type="text"></md-input>
+                        <label>Стоимость по договору (СМР) *</label>
+                        <md-input @keypress="eCode" v-model="contractPrice" :class="{'border-danger': $v.info.contractPrice.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
-                        <label>Тех Надзор</label>
+                        <label>Тех Надзор *</label>
                         <md-input v-model="info.techSupervision" :class="{'border-danger': $v.info.techSupervision.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
-                        <label>Тел номер</label>
-<!--                        <imask-input-->
-<!--                            :mask="$store.state.masks.phone"-->
-<!--                            :class="{'border-danger': $v.info.techSupervisionPhone.$error}"-->
-<!--                            radix="."-->
-<!--                            v-model="info.techSupervisionPhone"-->
-<!--                            type="tel"-->
-<!--                            :unmask="true"-->
-<!--                            autocomplete="off"-->
-<!--                            class="md-input"-->
-<!--                        />-->
+                        <label>Тел номер *</label>
                         <md-input v-model="info.techSupervisionPhone" :class="{'border-danger': $v.info.techSupervisionPhone.$error}" type="text"></md-input>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
-                        <label>ПТО</label>
+                        <label>ПТО *</label>
                         <md-select v-model="info.responsible.id" :class="{'border-danger': $v.info.responsible.id.$error}">
                             <md-option v-for="item in responsibles" :key="item.id" :value="item.id">
                                 {{item.fio}}
@@ -87,7 +77,7 @@
                     </md-field>
                 </div>
                 <div class="d-flex align-items-center justify-content-center mt-5 w-100">
-                    <button @click="save" class="btn btn-primary">
+                    <button @click="save" class="btn btn-success">
                         Сохранить
                     </button>
                 </div>
@@ -100,6 +90,14 @@
     import {required} from 'vuelidate/lib/validators';
     export default {
         name: "MainSection",
+        props:{
+            // switchingModal:{
+            //     type: Function,
+            //     default: ()=>{
+            //
+            //     }
+            // }
+        },
         data() {
             return {
                 info: {
@@ -120,7 +118,6 @@
         validations: {
             info: {
                 description: {required},
-                shortDescription: {required},
                 contractNumber: {required},
                 contractDate: {required},
                 customer: {required},
@@ -134,6 +131,7 @@
             },
         },
         created() {
+
             this.getAllUser();
         },
         methods: {
@@ -148,6 +146,7 @@
                 )
             },
             save() {
+
                 this.$v.info.$touch()
                 if (this.$v.info.$invalid) {
                     return
@@ -157,7 +156,7 @@
                 form.responsible = this.responsibles.find(item => item.id === form.responsible.id);
                 this.$api.post("/api/Project/AddProject", form).then(
                     response => {
-                        console.log(response);
+                        this.$emit('switching-modal', response.data.result)
                     },
                     error => {
                         console.log(error.response);
@@ -169,6 +168,16 @@
                     event.preventDefault();
                 }
             },
+        },
+        computed:{
+            contractPrice:{
+                get(){
+                    return this.numeralFormat(this.info.contractPrice)
+                },
+                set(val){
+                    this.info.contractPrice = this.numeralFormatToNumber(val)
+                }
+            }
         }
     }
 </script>
