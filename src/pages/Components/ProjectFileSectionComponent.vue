@@ -1,5 +1,5 @@
 <template>
-	<div v-if="form.ProjectId">
+	<div v-if="info.id">
 		<template>
 			<label v-if="!selectedFile.name" style="cursor: pointer">
 				<img src="https://image.flaticon.com/icons/svg/101/101671.svg" >
@@ -15,7 +15,7 @@
 							</div>
 							<div class="col-6">
 								<select v-model="form.FileCategoryInfo.id" :class="{'border-danger': !form.FileCategoryInfo.id && touched}" class="form-control">
-									<option v-for="item in list" :value="item.id">
+									<option v-for="item in fileCategoryList" :value="item.id">
 										{{item.name}}
 									</option>
 								</select>
@@ -66,7 +66,7 @@
 								</td>
 								<td class="md-table-cell">
 									<div class="md-table-cell-container">
-										<a :href="item.url" download>Скачать</a>
+										<a :href="item.url" target="_blank" download>Скачать</a>
 									</div>
 								</td>
 							</tr>
@@ -95,7 +95,7 @@
 					}
 				},
 				selectedFile: {},
-				list: []
+				fileCategoryList: []
 			}
 		},
 		created() {
@@ -105,7 +105,7 @@
 			getFileCategoryList() {
 				this.$api.get('/api/Project/GetFileCategories').then(
 					res => {
-						this.list = res.data.result.fileCategories
+						this.fileCategoryList = res.data.result.fileCategories
 					},
 					err => {
 						console.log(err.response);
