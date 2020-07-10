@@ -2,7 +2,7 @@
 	<div class="d-flex align-items-center justify-content-center flex-wrap login-bg" style="min-height: 100vh">
 		<form @submit.prevent="sendForm" class="myForm">
 			<div class="form-group">
-				<label for="name">Login</label>
+				<label for="name">Логин</label>
 				<input
 					v-model="form.login"
 					:class="{'border-danger': $v.form.login.$error}"
@@ -12,7 +12,7 @@
 				>
 			</div>
 			<div class="form-group">
-				<label for="password">Password</label>
+				<label for="password">Пароль</label>
 				<input
 					v-model="form.password"
 					:class="{'border-danger': $v.form.password.$error}"
@@ -23,7 +23,7 @@
 			</div>
 			<div class="d-flex justify-content-center">
 				<button class="btn btn-primary" type="submit">
-					Sign in
+					Войти
 				</button>
 			</div>
 		</form>

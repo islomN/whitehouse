@@ -101,6 +101,8 @@
                     response => {
                         // this.info.push(response.data.result);
                         this.$v.$reset();
+                        this.info.factPays.push(response.data.result);
+                        this.model = this.resetModel()
                     },
                     error => {
                         this.errorNotify(error.response.data.error.errorMessage)
@@ -123,6 +125,15 @@
                         this.errorNotify(error.response.data.error.errorMessage)
                     }
                 )
+            },
+            resetModel(){
+                return {
+                    date:null,
+                    sum: null,
+                    comment: null,
+                    isPrepay: false,
+                    projectId: 0
+                }
             }
         },
         computed:{

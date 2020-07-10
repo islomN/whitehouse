@@ -35,10 +35,14 @@
                                     <input class="form-control" v-model="form.description" @input="getAllProject" type="text">
                                 </div>
                                 <div>
-                                    <input class="form-control" v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">
+                                    <select class="form-control" v-model="form.userId" @change="getAllProject">
+                                        <option value="">Выберите ответственного</option>
+                                        <option v-for="(item, i) in responsibles" :key="i" :value="item.id" >{{item.fio}}}</option>
+                                    </select>
+<!--                                    <input class="form-control" v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">-->
                                 </div>
                                 <div v-if="isAdmin">
-                                    <button class="btn btn-default" @click="show">Добавить объекты</button>
+                                    <button class="btn btn-default" @click="show">Добавить объект</button>
                                 </div>
                             </div>
                         </div>
@@ -232,10 +236,10 @@
                     startTime: null,
                     endTime: null,
                     description: '',
-                    userId: null
+                    userId: ''
                 },
                 projects: [],
-    
+                responsibles: [],
                 info: {
                     description: '',
                     shortDescription: "",
@@ -253,6 +257,7 @@
         created() {
             this.errorNotifyMini("asdas")
             this.getAllProject();
+            this.getAllUser();
         },
         methods:{
             eCode(event) {
@@ -268,6 +273,16 @@
                 this.$api.post('/api/Project/GetProjectsByFilter', form).then(
                     response => {
                         this.projects = response.data.result.projects
+                    },
+                    error => {
+                        console.log(error.response);
+                    }
+                )
+            },
+            getAllUser() {
+                this.$api.get('/api/User/GetUsers').then(
+                    response => {
+                        this.responsibles = response.data.result.users;
                     },
                     error => {
                         console.log(error.response);
@@ -441,5 +456,8 @@
     }
     .w-60{
         width: 60%;
+    }
+    select.form-control {
+        border-radius: 3px;
     }
 </style>

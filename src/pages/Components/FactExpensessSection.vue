@@ -95,7 +95,8 @@
                     response => {
                         console.log(response)
                         this.$v.$reset();
-                        // this.info.push(response.data.result);
+                        this.info.factExpenses.push(response.data.result)
+                        this.model = this.resetModel()
                     },
                     error => {
                         this.errorNotify(error.errorMessage)
@@ -120,6 +121,14 @@
                         console.log(error);
                     }
                 )
+            },
+            resetModel(){
+                return {
+                    date:null,
+                        sum: 0,
+                        comment: null,
+                        projectId: 0
+                }
             }
         },
         computed:{
