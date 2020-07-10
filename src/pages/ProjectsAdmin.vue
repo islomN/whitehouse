@@ -194,16 +194,34 @@
                     <FactExpensessSectionComponent :info="info" v-else-if="factExpensessSection"></FactExpensessSectionComponent>
                     <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
                     <fact-achievements-section-component v-else-if="factAchievementsSection"></fact-achievements-section-component>
-<!--                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>-->
+                    <!--                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>-->
+                </div>
+
+                <div class="sections">
+                    <ProjectInfo
+                            :info="info"
+                            v-if="mainSection"
+                    />
+                    <ProjectFileSectionComponent
+                            :info="info"
+                            :openProjectInfoSection="openProjectInfoSection"
+                            v-else-if="fileSection"
+                    />
+                    <fact-achievements-section-component
+                            :info="info"
+                            :openProjectInfoSection="openProjectInfoSection"
+                            v-else-if="factAchievementsSection"
+                    >
+                    </fact-achievements-section-component>
+                    <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
+                    <fact-achievements-section-component v-else-if="factExpensessSection"></fact-achievements-section-component>
+                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>
                 </div>
             </div>
             <div class="footer">
         
             </div>
         </modal>
-
-        <vue-snotify></vue-snotify>
-
     </div>
 </template>
 
@@ -255,7 +273,6 @@
             }
         },
         created() {
-            this.errorNotifyMini("asdas")
             this.getAllProject();
             this.getAllUser();
         },
