@@ -62,6 +62,11 @@
 						<md-input disabled v-model="info.responsible.fio" type="text"></md-input>
 					</md-field>
 				</div>
+                <div  v-if="isAdmin" class="d-flex align-items-center justify-content-center mt-5 w-100">
+                    <button @click="toUpdate" class="btn btn-warning">
+                        Изменить
+                    </button>
+                </div>
 			</div>
 		</md-card-content>
 	</div>
@@ -73,7 +78,9 @@
 		name: "ProjectInfo",
 		props: ['info'],
 		methods: {
-		
+            toUpdate(){
+                this.$emit('switching-modal', this.info, true)
+            },
 		}
 	}
 </script>

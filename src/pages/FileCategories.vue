@@ -9,7 +9,7 @@
 						<div class="d-flex flex-wrap align-items-center justify-content-between">
 							<h4 class="title">Категории Файлов</h4>
 							<form @submit.prevent="save" class="d-flex align-items-center">
-								<input v-model="name" type="text" class="form-control mr-2">
+								<input v-model="name" type="text" class="form-control mr-2" placeholder="Намиенование">
 								<button type="submit" class="btn btn-default">
 									Добавить
 								</button>
@@ -88,5 +88,8 @@
     .btn-default{
         background: white;
         color: #2fbf00;
+    }
+    .form-control{
+        background: white;
     }
 </style>

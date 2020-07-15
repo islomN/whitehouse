@@ -9,7 +9,7 @@
       <mobile-menu slot="content"></mobile-menu>
       <sidebar-link to="/dashboard">
         <md-icon>dashboard</md-icon>
-        <p>Объкты</p>
+        <p>Объекты</p>
       </sidebar-link>
     <sidebar-link v-if="isAdmin" to="/user">
         <md-icon>bubble_chart</md-icon>

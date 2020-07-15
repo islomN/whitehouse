@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-card-content>
-            <div class="md-layout">
+            <div v-if="!isAdmin" class="md-layout" >
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Дата *</label>
@@ -28,7 +28,7 @@
                 <div class="md-layout-item md-small-size-100 md-size-100">
                     <md-field>
                         <label>Комментария</label>
-                        <md-textarea  v-model="model.comment" ></md-textarea>
+                        <md-input  v-model="model.comment" ></md-input>
                     </md-field>
                 </div>
                 <div class="d-flex align-items-center justify-content-center w-100">
@@ -46,6 +46,7 @@
                         <th>Дата</th>
                         <th>Сумма</th>
                         <th>Коментария</th>
+                        <th v-if="isAdmin">ПТО</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -53,10 +54,11 @@
 
                     <tr v-for="(item, i) in info.factExpenses">
                         <td>{{ i + 1}}</td>
-                        <td>{{$moment(item.data).format('DD-MM-YYYY')}}}</td>
+                        <td>{{$moment(item.data).format('DD-MM-YYYY')}}</td>
                         <td>{{item.sum}}</td>
                         <td>{{item.comment}}</td>
-                        <td>
+                        <td  v-if="isAdmin">{{item.responsible.fio}}</td>
+                        <td class="actions">
                             <span  v-if="isAdmin"  @click="deleteItem(i)" class="text-danger delete-item">Удалить</span>
                         </td>
                     </tr>
@@ -99,7 +101,7 @@
                         this.model = this.resetModel()
                     },
                     error => {
-                        this.errorNotify(error.errorMessage)
+                        this.errorNotify(error.response.data.error.errorMessage)
                     }
                 )
             },
@@ -117,7 +119,7 @@
                         this.info.factExpenses.splice(index, 1);
                     },
                     error => {
-                        this.errorNotify(error.errorMessage)
+                        this.errorNotify(error.response.data.error.errorMessage)
                         console.log(error);
                     }
                 )
@@ -151,7 +153,7 @@
 </script>
 
 <style >
-    .md-select-menu{
-        z-index: 100000 !important;
+    .actions span{
+        cursor: pointer;
     }
 </style>

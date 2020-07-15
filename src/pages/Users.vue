@@ -22,7 +22,7 @@
                                     <md-table-cell md-label="ФИО">{{ item.fio }}</md-table-cell>
                                     <md-table-cell md-label="Тел">{{ item.phone }}</md-table-cell>
                                     <md-table-cell md-label="Тип">{{ item.userType == 1 ? 'Админ' : 'Пользователь' }}</md-table-cell>
-                                    <md-table-cell md-label="Действие">
+                                    <md-table-cell md-label="Действие" class="actions">
                                         <div class="md-table-cell-container mr-2">
                                             <span @click="addEditUser(item)" class="action orange text-warning">Редактировать</span>
                                         </div>

@@ -7,8 +7,9 @@
                 <md-card>
                     <md-card-header data-background-color="green">
                         <div class="d-flex flex-wrap justify-content-between align-items-center">
-                            <h4 class="title">Объкты</h4>
-                            <div class="d-flex align-items-center flex-wrap search-section">
+                            <h4 class="title">Объекты</h4>
+                            <div class="d-flex align-items-center flex-wrap search-section" v-if="isAdmin">
+
                                 <div>
                                     <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
                                                           :auto-close="true"
@@ -31,13 +32,13 @@
                                                           label="Дата до"
                                     />
                                 </div>
-                                <div>
-                                    <input class="form-control" v-model="form.description" @input="getAllProject" type="text">
+                                <div >
+                                    <input class="form-control" v-model="form.description" @input="getAllProject" type="text" placeholder="Введите текст для поиска">
                                 </div>
                                 <div>
                                     <select class="form-control" v-model="form.userId" @change="getAllProject">
                                         <option value="">Выберите ответственного</option>
-                                        <option v-for="(item, i) in responsibles" :key="i" :value="item.id" >{{item.fio}}}</option>
+                                        <option v-for="(item, i) in responsibles" :key="i" :value="item.id" >{{item.fio}}</option>
                                     </select>
 <!--                                    <input class="form-control" v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">-->
                                 </div>
@@ -46,8 +47,20 @@
                                 </div>
                             </div>
                         </div>
+
                     </md-card-header>
                     <div class="md-card-content">
+                        <div v-if="isAdmin" class="excel-section">
+                            <excel :data="excelData.json_data"
+                                   :fields="excelData.json_fields"
+                                   :name="'Объекты.xls'"
+                                   class="btn excelBtn"
+                                   worksheet="My Worksheet">
+                                <i class="icon-excel"></i>
+                                <button class="btn btn-success" @click="toExcel">Скачать</button>
+                            </excel>
+
+                        </div>
                         <div >
                             <div class="md-content md-table md-theme-default" >
                                 <div class="md-content md-table-content md-scrollbar md-theme-default">
@@ -61,13 +74,14 @@
                                                     </div>
                                                 </div>
                                             </th>
-                                            <th class="md-table-head w-60">
+                                            <th class="md-table-head w-30">
                                                 <div class="md-table-head-container md-ripple md-disabled">
                                                     <div class="md-table-head-label">
-                                                        Наименование объекта
+                                                        Наименование объекта (в кратце)
                                                     </div>
                                                 </div>
                                             </th>
+
                                             <th class="md-table-head">
                                                 <div class="md-table-head-container md-ripple md-disabled">
                                                     <div class="md-table-head-label">
@@ -77,25 +91,37 @@
                                             </th>
                                             <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
                                                 <div class="md-table-head-label">
-    
                                                     Заказчик
-    
-                                                   </div>
+                                                </div>
                                             </div>
                                             </th>
+
                                             <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
                                                 <div class="md-table-head-label">
-    
+
                                                     Стоимость по договору (СМР)
                                                 </div>
                                             </div>
                                             </th>
+                                            <th class="md-table-head w-30">
+                                                <div class="md-table-head-container md-ripple md-disabled">
+                                                    <div class="md-table-head-label">
+                                                        Факт выполнения
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="md-table-head w-30">
+                                                <div class="md-table-head-container md-ripple md-disabled">
+                                                    <div class="md-table-head-label">
+                                                        Ожидание ({{getMonthName()}})
+                                                    </div>
+                                                </div>
+                                            </th>
+
                                             <th class="md-table-head">
                                                 <div class="md-table-head-container md-ripple md-disabled">
                                                     <div class="md-table-head-label">
-    
                                                         Дейсвия
-    
                                                      </div>
                                                 </div>
                                             </th>
@@ -107,7 +133,7 @@
                                                 <div class="md-table-cell-container">{{i+1}} </div>
                                             </td>
                                             <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{item.description}} </div>
+                                                <div class="md-table-cell-container">{{item.shortDescription}} </div>
                                             </td>
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">{{item.contractNumber}}</div>
@@ -115,9 +141,18 @@
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">{{item.customer}}</div>
                                             </td>
+
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">{{numeralFormat(item.contractPrice)}}</div>
                                             </td>
+
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{numeralFormat(calcFactAchievements(item))}} </div>
+                                            </td>
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{numeralFormat(calcPlanAchievements(item))}} </div>
+                                            </td>
+
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">
                                                     <span @click="openProjectInfoSection(item.id, $event)" class="action green text-info">Посмотреть</span>
@@ -126,6 +161,9 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <div v-if="!isAdmin && pagination.count > pagination.size">
+                                        <v-pagination v-model="pagination.page" :page-count="pagination.count"></v-pagination>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +183,7 @@
                 </ul>
 
                 <div class="sections">
-                    <main-section-component @switching-modal="switchingModal" v-if="mainSection"></main-section-component>
+                    <main-section-component @switching-modal="switchingModal" v-if="mainSection" :current-info="info"></main-section-component>
                 </div>
             </div>
             <div class="footer">
@@ -186,40 +224,51 @@
                             Факт выполнения
                         </a>
                     </li>
+                    <li class="nav-item" @click="openProjectNotesSection">
+                        <a class="nav-link" :class="{'active':projectNotesSection }">
+                            Примечания проекта
+                        </a>
+                    </li>
                 </ul>
                 <div class="sections">
-                    <ProjectInfo :info="info"  v-if="mainSection" />
-                    <ProjectFileSectionComponent :info="info" :files="[]" v-else-if="fileSection" />
-                    <FactPaysComponent :info="info" v-else-if="factPaysSection" />
-                    <FactExpensessSectionComponent :info="info" v-else-if="factExpensessSection"></FactExpensessSectionComponent>
-                    <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
-                    <fact-achievements-section-component v-else-if="factAchievementsSection"></fact-achievements-section-component>
-                    <!--                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>-->
-                </div>
-
-                <div class="sections">
+<!--                    <main-section-component  v-if="mainSection && isAdmin" @switching-modal="switchingModal" :current-info="info"></main-section-component>-->
                     <ProjectInfo
-                            :info="info"
                             v-if="mainSection"
+                            @switching-modal="switchingModal"
+                            :info="info"
                     />
                     <ProjectFileSectionComponent
                             :info="info"
                             :openProjectInfoSection="openProjectInfoSection"
                             v-else-if="fileSection"
                     />
+                    <FactPaysComponent :info="info" v-else-if="factPaysSection" />
+                    <FactExpensessSectionComponent
+                            :info="info"
+                            v-else-if="factExpensessSection"
+                    ></FactExpensessSectionComponent>
+                    <plan-achivievements-section-component
+                            :info="info"
+                            v-else-if="planAchievementsSection"
+                    ></plan-achivievements-section-component>
                     <fact-achievements-section-component
                             :info="info"
                             :openProjectInfoSection="openProjectInfoSection"
                             v-else-if="factAchievementsSection"
                     >
                     </fact-achievements-section-component>
-                    <plan-achivievements-section-component  v-else-if="planAchievementsSection"></plan-achivievements-section-component>
-                    <fact-achievements-section-component v-else-if="factExpensessSection"></fact-achievements-section-component>
-                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>
+                    <ProjectNotesSectionComponent
+                            :info="info"
+                            v-else-if="projectNotesSection"
+                    ></ProjectNotesSectionComponent>
+                    <!--                    <project-notes-section-component v-else-if="projectNotesSection"></project-notes-section-component>-->
                 </div>
+
+
+
             </div>
             <div class="footer">
-        
+
             </div>
         </modal>
     </div>
@@ -234,6 +283,8 @@
     import ProjectNotesSectionComponent from './Components/ProjectNotesSection'
     import ProjectInfo from './Components/ProjectInfo'
     import FactPaysComponent from './Components/FactPaysSection'
+    import Excel from 'vue-json-excel'
+    import vPagination from 'vue-plain-pagination'
     export default {
         name: "Projects",
         components:{
@@ -244,7 +295,9 @@
             FactExpensessSectionComponent,
             ProjectNotesSectionComponent,
             FactPaysComponent,
-            ProjectInfo
+            ProjectInfo,
+            Excel,
+            vPagination
         },
         data(){
             return {
@@ -270,11 +323,20 @@
                     techSupervisionPhone: "",
                     responsible: {}
                 },
+                excelData:{},
+                pagination:{
+                    count:1,
+                    page: 1,
+                    size: 10
+                }
             }
         },
         created() {
             this.getAllProject();
-            this.getAllUser();
+
+            if(this.isAdmin){
+                this.getAllUser();
+            }
         },
         methods:{
             eCode(event) {
@@ -287,14 +349,29 @@
                 if (form.userId) {
                     form.userId = +form.userId;
                 }
-                this.$api.post('/api/Project/GetProjectsByFilter', form).then(
-                    response => {
-                        this.projects = response.data.result.projects
-                    },
-                    error => {
-                        console.log(error.response);
-                    }
-                )
+
+                let api = null;
+                if(this.isAdmin){
+                    this.$api.post('/api/Project/GetProjectsByFilter', form).then(
+                        response => {
+                            this.projects = response.data.result.projects;
+                            this.toExcel();
+                        },
+                        error => {
+                            console.log(error.response);
+                        }
+                    );
+                }else{
+                    this.$api.get( '/api/Project/GetProjects/'+this.pagination.page).then(
+                        response => {
+                            this.projects = response.data.result.projects;
+                            this.pagination.count =  Math.ceil(response.data.result.projectCount/this.pagination.size)
+                        },
+                        error => {
+                            console.log(error.response);
+                        }
+                    );
+                }
             },
             getAllUser() {
                 this.$api.get('/api/User/GetUsers').then(
@@ -306,17 +383,165 @@
                     }
                 )
             },
+            toExcel(){
+                let excelInfo = [];
+
+                for(let x in this.projects){
+                    console.log(this.projects[x])
+                    let item = this.projects[x];
+                    let info = {
+                        id:x+1,
+                        description: item.description,
+                        shortDescription: item.shortDescription,
+                        customer: item.customer,
+                        contract: "№ " +item.contractNumber + " от "+ this.$moment(item.contractDate).format('DD-MM-YYYY'),
+                        contractProvider: item.contractProvider,
+                        contractPrice: item.contractPrice,
+                        factAchievements: this.calcFactAchievements(item),
+                        planAchievements: this.calcPlanAchievements(item),
+                        deadline: this.$moment(item.deadline).format('DD-MM-YYYY'),
+                        factExpenses: this.calcFactExpenses(item),
+                        factPrepay: this.calcPrepay(item),
+                        factNoPrepay: this.calcNotPrepay(item),
+                        factAllpay:this.calcAllpay(item),
+                        fivePersent: this.calcFactAchievements(item) * 5/100,
+                        debt: this.calcFactAchievements(item)  -  this.calcFactAchievements(item) * 5/100 - this.calcAllpay(item),
+                    };
+
+                    info['projectNote'] = '';
+                    info['projectNoteOther'] = '';
+                    for(var i=0; i  < item.projectNotes.length; i++){
+                        if(i === 0){
+                            info['projectNote'] =  item.projectNotes[i].note;
+                        }else{
+                            info['projectNoteOther'] +=  item.projectNotes[i].note + '\n';
+                        }
+                    }
+
+                    info.responsible = item.responsible.fio;
+                    info.responsiblePhone = item.responsible.phone;
+                    info.techSupervision = item.techSupervision;
+                    info.techSupervisionPhone = item.techSupervisionPhone;
+                    excelInfo.push(info)
+                }
+
+                let planAchievements = 'Ожидани (' +this.getMonthName()+')';
+                let fields = {
+                    '№': 'id',
+                    'Наименование объекта': 'description',
+                    'в кратце': 'shortDescription',
+                    'Договор №': 'contract',
+                    'Заказчик': 'customer',
+                    'Подрядная организация': 'contractProvider',
+                    'Стоимость по договору (СМР)': 'contractPrice',
+                    'Факт выполнение': 'factAchievements',
+
+                };
+                fields[planAchievements] = 'planAchievements';
+
+                fields['срок сдачи выполнении']  = 'deadline';
+                fields['Факт расход']  =  'factExpenses';
+                fields['Предоплата']  =  'factPrepay';
+                fields['Оплачено']  =  'factNoPrepay';
+                fields['Итого оплата']  =  'factAllpay';
+                fields['5%']  = 'fivePersent';
+                fields['Задолженность 95%']  = 'debt';
+                fields['Примечания 1']  = 'projectNote';
+                fields['Примечания 2']  = 'projectNoteOther';
+                fields['ПТО']  = 'responsible';
+                fields['тел номер']  = 'responsiblePhone';
+                fields['Тех Надзор']  = 'techSupervision';
+                fields['Тел номер']  = 'techSupervisionPhone';
+
+                this.excelData =  {
+                    json_fields: fields,
+                    json_data:excelInfo,
+                    json_meta: [
+                        [
+                            {
+                                'key': 'charset',
+                                'value': 'utf-8'
+                            }
+                        ]
+                    ],
+                };
+            },
+            getMonthName(){
+                return this.getMonth()[new Date().getMonth()]
+            },
+            calcFactAchievements(item){
+                let sum = 0;
+
+                for(let i in item.factAchievements){
+                    sum+= item.factAchievements[i].sum
+                }
+
+                return sum;
+            },
+            calcPlanAchievements(item){
+                let sum = 0;
+
+                for(let i in item.planAchievements){
+                    sum+= item.planAchievements[i].sum
+                }
+
+                return sum;
+            },
+            calcFactExpenses(item){
+                let sum = 0;
+
+                for(let i in item.factExpenses){
+                    sum+= item.factExpenses[i].sum
+                }
+
+                return sum;
+            },
+            calcPrepay(item){
+                let sum = 0;
+
+                for(let i in item.factPays.filter(i => i.isPrepay)){
+                    sum+= item.factPays[i].sum
+                }
+
+                return sum;
+            },
+            calcNotPrepay(item){
+                let sum = 0;
+
+                for(let i in item.factPays.filter(i => !i.isPrepay)){
+                    sum+= item.factPays[i].sum
+                }
+
+                return sum;
+            },
+            calcAllpay(item){
+                let sum = 0;
+
+                for(let i in item.factPays){
+                    sum+= item.factPays[i].sum
+                }
+
+                return sum;
+            },
             show () {
-                this.openMainSection()
+                this.openMainSection();
                 this.$modal.show('projectMainInfo');
             },
             hide () {
                 this.$modal.hide('projectMainInfo');
             },
-            switchingModal(info){
-                this.$modal.hide('projectMainInfo');
+            switchingModal(info, toUpdate = false){
+                let hide = "projectMainInfo";
+                let show = "projectInfoModal";
+                if(toUpdate){
+                    let temp = hide;
+                    hide = show;
+                    show = temp;
+                }
+
+                this.$modal.hide(hide);
                 this.info = info;
-                this.$modal.show('projectInfoModal');
+                this.$modal.show(show);
                 this.getAllProject()
 
             },
@@ -354,7 +579,9 @@
                     }
                 )
             },
-
+            getMonth(){
+                return  ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+            }
         },
         computed:{
 
@@ -415,6 +642,11 @@
                 }
             },
 
+        },
+        watch:{
+            'pagination.page': function(){
+                this.getAllProject()
+            }
         }
     }
 </script>
@@ -474,7 +706,42 @@
     .w-60{
         width: 60%;
     }
+    .w-30{
+        width: 30%;
+    }
     select.form-control {
         border-radius: 3px;
+    }
+    .excel-section{
+        text-align: right;
+    }
+    .form-control{
+        min-width: 250px;
+    }
+</style>
+
+<style>
+    .pagination-link{
+        min-width: 30px;
+        height: 28px;
+        background: #5eb562;
+        margin: 0 10px;
+        border-radius: 1px;
+        border: 0;
+        box-shadow: 0 0 0 2px #5eb562;
+        color: #fff;
+        font-weight: bolder;
+    }
+
+    .pagination-link.pagination-link--active{
+        background: #fff;
+        color: #60b664;
+        box-shadow: 0 0 0 2px;
+    }
+    .actions span{
+        cursor: pointer;
+    }
+    .search-section input, .search-section select{
+        background: white;
     }
 </style>

@@ -1,10 +1,12 @@
 <template>
     <div v-if="info.id">
-        <template>
-            <label v-if="!selectedFile.name" style="cursor: pointer">
-                <img src="https://image.flaticon.com/icons/svg/101/101671.svg" >
+        <template v-if="!isAdmin">
+            <label v-if="!selectedFile.name" class="file-upload" style="cursor: pointer">
                 <input type="file" @change="takeFile" class="d-none">
-                <div class="d-flex d-flex justify-content-center">Загрузить</div>
+                <div class="d-flex d-flex justify-content-center icon btn btn-file">
+                    <img src="/img/images.png" >
+                    <span>Загрузить</span>
+                </div>
             </label>
             <div v-else>
                 <div class="row">
@@ -40,34 +42,51 @@
             <div >
                 <div class="md-content md-table md-theme-default" >
                     <div class="md-content md-table-content md-scrollbar md-theme-default">
-                        <table>
+                        <table class="tables">
                             <thead>
                             <tr>
-                                <th class="md-table-head">
-                                    <div class="md-table-head-container md-ripple md-disabled">
-                                        <div class="md-table-head-label">
-                                            Наименование объекта
-                                        </div>
-                                    </div>
+                                <th>
+                                    №
                                 </th>
-                                <th class="md-table-head">
-                                    <div class="md-table-head-container md-ripple md-disabled">
-                                        <div class="md-table-head-label">
-                                            Договор
-                                        </div>
-                                    </div>
+                                <th>
+                                    Наименование объекта
+                                </th>
+                                <th>
+                                    Категория файлов
+                                </th>
+                                <th >
+                                    Файл
+                                </th>
+                                <th v-if="isAdmin">
+                                    ПТО
+                                </th>
+                                <th  v-if="isAdmin">
+
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in info.files" class="md-table-row">
+                            <tr v-for="(item, i) in info.files" :key="i" class="md-table-row">
+                                <td class="md-table-cell">
+                                    <div class="md-table-cell-container">{{i+1}}</div>
+                                </td>
                                 <td class="md-table-cell">
                                     <div class="md-table-cell-container">{{item.name}}</div>
+                                </td>
+                                <td class="md-table-cell">
+                                    <div class="md-table-cell-container">{{item.fileCategoryInfo.name}}</div>
                                 </td>
                                 <td class="md-table-cell">
                                     <div class="md-table-cell-container">
                                         <a :href="item.url" target="_blank" download>Скачать</a>
                                     </div>
+                                </td>
+                                <td v-if="isAdmin" class="md-table-cell">
+                                    <div class="md-table-cell-container">{{item.responsible.fio}}</div>
+                                </td>
+
+                                <td  v-if="isAdmin" class="actions">
+                                    <span @click="deleteItem(i)" class="text-danger delete-item">Удалить</span>
                                 </td>
                             </tr>
                             </tbody>
@@ -136,18 +155,50 @@
                         this.form.FileCategoryInfo.id = null;
                         this.selectedFile = {};
                         this.touched = false;
-                        this.openProjectInfoSection(this.info.id);
+                        this.info.files.push(res.data.result)
                     },
                     err => {
                         console.log(err.response);
                     }
                 )
-
+            },
+            deleteItem(index){
+                if(!confirm("Вы действительно хотите удалить?")){
+                    return;
+                }
+                let factPay = this.info.files[index]
+                if(!factPay){
+                    return;
+                }
+                this.$api.delete('/api/Project/RemoveProjectFile/'+factPay.id).then(
+                    response => {
+                        this.info.files.splice(index, 1);
+                    },
+                    error => {
+                        this.errorNotify(error.response.data.error.errorMessage)
+                    }
+                )
             }
         }
     }
 </script>
 
 <style scoped>
-
+.file-upload img{
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+    .btn-file{
+        box-shadow: 0 0 0 3px #3d8c40;
+        color: #3d8c40;
+    }
+    .btn-file:hover{
+        box-shadow: 0 0 0 2px #3d8c40;
+        color: #3d8c40;
+    }
+    .btn-file:active{
+        box-shadow: 0 0 0 1px #3d8c40;
+        color: #3d8c40;
+    }
 </style>

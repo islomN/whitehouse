@@ -81,6 +81,7 @@
                         Сохранить
                     </button>
                 </div>
+
             </div>
         </md-card-content>
     </div>
@@ -91,12 +92,10 @@
     export default {
         name: "MainSection",
         props:{
-            // switchingModal:{
-            //     type: Function,
-            //     default: ()=>{
-            //
-            //     }
-            // }
+            currentInfo: {
+                type: Object,
+                default: {}
+            }
         },
         data() {
             return {
@@ -131,7 +130,7 @@
             },
         },
         created() {
-
+            this.info = this.currentInfo
             this.getAllUser();
         },
         methods: {
@@ -146,7 +145,6 @@
                 )
             },
             save() {
-
                 this.$v.info.$touch()
                 if (this.$v.info.$invalid) {
                     return
@@ -154,14 +152,29 @@
                 let form = {...this.info};
                 form.contractPrice = +form.contractPrice;
                 form.responsible = this.responsibles.find(item => item.id === form.responsible.id);
-                this.$api.post("/api/Project/AddProject", form).then(
-                    response => {
-                        this.$emit('switching-modal', response.data.result)
-                    },
-                    error => {
-                        console.log(error.response);
-                    }
-                )
+
+                if(this.info.id > 0){
+                    this.$api.put("/api/Project/UpdateProject", form).then(
+                        response => {
+                            this.successNotify("Успешно сахранено!!!")
+                            this.$emit('switching-modal', response.data.result)
+                        },
+                        error => {
+                            this.errorNotify(error.response.data.error.errorMessage)
+                        }
+                    )
+                }else{
+                    this.$api.post("/api/Project/AddProject", form).then(
+                        response => {
+                            this.successNotify("Успешно сахранено!!!")
+                            this.$emit('switching-modal', response.data.result, false)
+                        },
+                        error => {
+                            this.errorNotify(error.response.data.error.errorMessage)
+                        }
+                    )
+                }
+
             },
             eCode(event) {
                 if (isNaN(event.key)) {
