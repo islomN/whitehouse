@@ -16,6 +16,9 @@ import store from './store';
 import snotify from 'vue-snotify'
 import VueSweetalert2 from 'vue-sweetalert2';
 
+import InputMask from 'vue-input-mask';
+
+
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
 
@@ -71,6 +74,8 @@ Vue.use(VueSweetalert2);
 Vue.component('imask-input', IMaskComponent);
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 Vue.component('paginate', Paginate);
+Vue.component('input-mask', InputMask)
+
 Vue.mixin(NumberFormat);
 Vue.mixin(notificationMixin);
 

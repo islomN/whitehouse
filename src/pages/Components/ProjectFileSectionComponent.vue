@@ -30,7 +30,7 @@
                             <button @click="selectedFile = {}" style="width: 80px; margin-left: 10px; margin-right: 10px" class="btn btn-danger">
                                 Убрать
                             </button>
-                            <button @click="save" style="width: 100px" class="btn btn-primary">
+                            <button @click="save" style="width: 100px" class="btn btn-primary" :disabled="disabled">
                                 Добавить
                             </button>
                         </div>
@@ -114,7 +114,8 @@
                     }
                 },
                 selectedFile: {},
-                fileCategoryList: []
+                fileCategoryList: [],
+                disabled: false
             }
         },
         created() {
@@ -137,8 +138,10 @@
                 this.selectedFile = files[0];
             },
             save() {
+                this.disabled = true;
                 this.touched = true;
                 if (!this.form.name || !this.form.FileCategoryInfo.id) {
+                    this.disabled = false;
                     return
                 }
                 let data = new FormData()
@@ -161,6 +164,9 @@
                         console.log(err.response);
                     }
                 )
+                .finally(() =>{
+                    this.disabled = false;
+                })
             },
             deleteItem(index){
                 if(!confirm("Вы действительно хотите удалить?")){

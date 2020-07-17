@@ -33,7 +33,7 @@
                         </md-field>
                     </div>
                     <div class="d-flex align-items-center justify-content-center mt-2 w-100">
-                        <button @click="saveCreateNew" class="btn btn-success">
+                        <button @click="saveCreateNew" class="btn btn-success" :disabled="disabled">
                             Сохранить
                         </button>
                     </div>
@@ -133,7 +133,7 @@
                                 <button @click="selectedFile = {}" style="width: 80px; margin-left: 10px; margin-right: 10px" class="btn btn-danger">
                                     Убрать
                                 </button>
-                                <button @click="save" style="width: 100px" class="btn btn-primary">
+                                <button @click="save" style="width: 100px" class="btn btn-primary" :disabled="disabledFile">
                                     Добавить
                                 </button>
                             </div>
@@ -267,7 +267,9 @@
                     }
                 },
                 selectedFile: {},
-                fileCategoryList: []
+                fileCategoryList: [],
+                disabled: false,
+                disabledFile: false,
             }
         },
         created() {
@@ -281,8 +283,10 @@
         },
         methods: {
             saveCreateNew() {
+                this.disabled = true;
                 this.$v.createForm.$touch();
                 if (this.$v.createForm.$invalid) {
+                    this.disabled = false;
                     return;
                 }
                 let form = {...this.createForm};
@@ -299,7 +303,9 @@
                     error => {
                         this.errorNotify(error.response.data.error.errorMessage)
                     }
-                )
+                ).finally(() =>{
+                    this.disabled = false;
+                })
             },
             deleteItem(index){
                 if(!confirm("Вы действительно хотите удалить?")){
@@ -341,8 +347,10 @@
                 this.selectedFile = files[0];
             },
             save() {
+                this.disabledFile = true;
                 this.touched = true;
                 if (!this.form.name || !this.form.FileCategoryInfo.id) {
+                    this.disabledFile = false;
                     return
                 }
                 let data = new FormData()
@@ -366,7 +374,9 @@
                     err => {
                         console.log(err.response);
                     }
-                )
+                ).finally(() =>{
+                    this.disabledFile = false;
+                })
             },
             deleteFileItem(index){
                 if(!confirm("Вы действительно хотите удалить?")){

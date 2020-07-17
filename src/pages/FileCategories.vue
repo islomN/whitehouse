@@ -10,7 +10,7 @@
 							<h4 class="title">Категории Файлов</h4>
 							<form @submit.prevent="save" class="d-flex align-items-center">
 								<input v-model="name" type="text" class="form-control mr-2" placeholder="Намиенование">
-								<button type="submit" class="btn btn-default">
+								<button type="submit" class="btn btn-default" :disabled="disabled">
 									Добавить
 								</button>
 							</form>
@@ -41,7 +41,8 @@
 		data(){
 			return {
 				list:[],
-				name: ''
+				name: '',
+				disabled: false
 			}
 		},
 		validations: {
@@ -65,8 +66,10 @@
 				)
 			},
 			save() {
+				this.disabled = true;
 				this.$v.name.$touch()
 				if (this.$v.name.$invalid) {
+					this.disabled = false;
 					return
 				}
 				this.$api.post('/api/Project/AddFileCategory', {name: this.name}).then(
@@ -78,7 +81,9 @@
                     error => {
                         this.errorNotify(error.response.data.error.errorMessage)
 					}
-				)
+				).finally(() =>{
+					this.disabled = false;
+				})
 			}
 		}
 	}
