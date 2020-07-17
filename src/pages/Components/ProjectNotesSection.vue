@@ -9,7 +9,7 @@
                     </md-field>
                 </div>
                 <div class="d-flex align-items-center justify-content-center w-100">
-                    <button @click="save" class="btn btn-success">
+                    <button @click="save" class="btn btn-success" :disabled="disabled">
                         Сохранить
                     </button>
                 </div>
@@ -22,7 +22,6 @@
                         <th>№</th>
                         <th>Коментария</th>
                         <th>Дата добавления</th>
-                        <th>Дата добавления</th>
                         <th v-if="isAdmin">ПТО</th>
                     </tr>
                     </thead>
@@ -30,8 +29,7 @@
                     <tr v-for="(item, i) in info.projectNotes">
                         <td>{{ i + 1}}</td>
                         <td>{{item.note}}</td>
-                        <td>{{$moment(item.data).format('DD-MM-YYYY HH:mm')}}</td>
-                        <td>{{$moment(item.data).format('DD-MM-YYYY HH:mm')}}</td>
+                        <td>{{$moment(item.date).format('DD-MM-YYYY HH:mm')}}</td>
                         <td v-if="isAdmin">{{item.responsible.fio}}</td>
                     </tr>
                     </tbody>
@@ -49,14 +47,17 @@
             return {
                 model:{
                     note: null,
-                }
+                },
+                disabled: false
             }
         },
         methods: {
             save(){
+                this.disabled = true;
                 this.$v.model.$touch();
                 if(this.$v.model.$invalid){
-                    this.errorNotify("Форма не правильно заполнено!!!")
+                    this.errorNotify("Форма не правильно заполнено!!!");
+                    this.disabled = false;
                     return;
                 }
                 this.model.projectId = this.info.id;
@@ -69,7 +70,9 @@
                     error => {
                         this.errorNotify(error.response.data.error.errorMessage)
                     }
-                )
+                ).finally(() =>{
+                    this.disabled = false;
+                })
             },
             resetModel(){
                 return {

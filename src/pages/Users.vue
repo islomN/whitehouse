@@ -27,7 +27,7 @@
                                             <span @click="addEditUser(item)" class="action orange text-warning">Редактировать</span>
                                         </div>
                                         <div v-if="isAdmin" class="md-table-cell-container">
-                                            <span class="action red text-danger">Удалить</span>
+                                            <span class="action red text-danger" @click="deleteUser(item)">Удалить</span>
                                         </div></md-table-cell>
                                 </md-table-row>
                             </md-table>
@@ -62,15 +62,16 @@
                                     </md-field>
                                 </div>
                                 <div class="md-layout-item md-small-size-100 md-size-100">
-                                    <md-field>
-                                        <label>Тел</label>
-                                        <md-input v-model="form.phone" :class="{'border-danger': $v.form.phone.$error}" type="text"></md-input>
-                                    </md-field>
+                                    <label>Тел</label>
+                                    <input-mask v-model="form.phone" class="form-control input-mask" mask="+(999) 99 999 99 99" maskChar=" "  :class="{'border-danger': $v.form.phone.$error}"></input-mask>
+                                    <!--
+                                                                        <md-field>
+                                                                                <md-input v-model="form.phone" :class="{'border-danger': $v.form.phone.$error}" type="text"></md-input>-->
                                 </div>
                                 <div class="md-layout-item md-small-size-100 md-size-100">
                                     <md-field>
                                         <label>Пароль</label>
-                                        <md-input v-model="form.password" :class="{'border-danger': $v.form.password.$error}" type="text"></md-input>
+                                        <md-input v-model="form.password" :class="{'border-danger': $v.form.password.$error}" type="password"></md-input>
                                     </md-field>
                                 </div>
                                 <div v-if="!form.id" class="md-layout-item md-small-size-100 md-size-100">
@@ -84,7 +85,7 @@
                                     </md-field>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mt-5 w-100">
-                                    <button @click="save" class="btn btn-primary">
+                                    <button @click="save" class="btn btn-primary" :disabled="disabled">
                                         Сохранить
                                     </button>
                                 </div>
@@ -124,7 +125,8 @@
                     "fio": "",
                     "phone": "",
                     "userType": 0
-                }
+                },
+                disabled:false
             }
         },
         created() {
@@ -149,10 +151,13 @@
                 this.$modal.show('addEditUser')
             },
             save() {
+                this.disabled = true;
                 this.$v.form.$touch()
                 if (this.$v.form.$invalid) {
+                    this.disabled = false;
                     return
                 }
+
                 let a;
                 if (this.form.id) {
                     a = this.$api.post('/api/User/EditUser', this.form)
@@ -167,6 +172,26 @@
                     },
                     err => {
                         console.log(err.response);
+                    }
+                ).finally(() =>{
+                    this.disabled = false;
+                })
+            },
+            deleteUser(user){
+                if(!user){
+                    return;
+                }
+                if(!confirm("Вы действительно хотите удалить?")){
+                    return;
+                }
+                let index = this.users.findIndex(i => i.id === user.id)
+
+                this.$api.delete('/api/User/RemoveUser/'+user.id).then(
+                    response => {
+                        this.users.splice(index, 1);
+                    },
+                    error => {
+                        this.errorNotify(error.response.data.error.errorMessage)
                     }
                 )
             },
@@ -192,9 +217,8 @@
         background: white;
         color: #2fbf00;
     }
-
-
-
-
+    .form-control.input-mask{
+        border: 0;
+    }
 </style>
 

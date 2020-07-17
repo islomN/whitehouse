@@ -61,10 +61,13 @@
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
+                    <label>Тел номер *</label>
+                    <input-mask v-model="info.techSupervisionPhone" class="form-control input-mask" mask="+(999) 99 999 99 99" maskChar=" "  :class="{'border-danger': $v.info.techSupervisionPhone.$error}"></input-mask>
+
+                    <!--<md-field>
                         <label>Тел номер *</label>
                         <md-input v-model="info.techSupervisionPhone" :class="{'border-danger': $v.info.techSupervisionPhone.$error}" type="text"></md-input>
-                    </md-field>
+                    </md-field>-->
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
@@ -77,7 +80,7 @@
                     </md-field>
                 </div>
                 <div class="d-flex align-items-center justify-content-center mt-5 w-100">
-                    <button @click="save" class="btn btn-success">
+                    <button @click="save" class="btn btn-success" :disabled="disabled">
                         Сохранить
                     </button>
                 </div>
@@ -111,7 +114,8 @@
                     techSupervisionPhone: "",
                     responsible: {}
                 },
-                responsibles:[]
+                responsibles:[],
+                disabled: false
             }
         },
         validations: {
@@ -145,14 +149,15 @@
                 )
             },
             save() {
+                this.disabled = true;
                 this.$v.info.$touch()
                 if (this.$v.info.$invalid) {
+                    this.disabled = false;
                     return
                 }
                 let form = {...this.info};
                 form.contractPrice = +form.contractPrice;
                 form.responsible = this.responsibles.find(item => item.id === form.responsible.id);
-
                 if(this.info.id > 0){
                     this.$api.put("/api/Project/UpdateProject", form).then(
                         response => {
@@ -163,16 +168,23 @@
                             this.errorNotify(error.response.data.error.errorMessage)
                         }
                     )
+                    .finally(() =>{
+                        this.disabled = false;
+                    })
                 }else{
-                    this.$api.post("/api/Project/AddProject", form).then(
-                        response => {
-                            this.successNotify("Успешно сахранено!!!")
-                            this.$emit('switching-modal', response.data.result, false)
-                        },
-                        error => {
-                            this.errorNotify(error.response.data.error.errorMessage)
-                        }
-                    )
+                    this.$api.post("/api/Project/AddProject", form)
+                        .then(
+                            response => {
+                                this.successNotify("Успешно сахранено!!!")
+                                this.$emit('switching-modal', response.data.result, false)
+                            },
+                            error => {
+                                this.errorNotify(error.response.data.error.errorMessage)
+                            }
+                        )
+                        .finally(() =>{
+                            this.disabled = false;
+                        })
                 }
 
             },

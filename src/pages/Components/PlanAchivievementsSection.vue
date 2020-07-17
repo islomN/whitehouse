@@ -32,7 +32,7 @@
                     </md-field>
                 </div>
                 <div class="d-flex align-items-center justify-content-center w-100">
-                    <button @click="save" class="btn btn-success">
+                    <button @click="save" class="btn btn-success" :disabled="disabled">
                         Сохранить
                     </button>
                 </div>
@@ -53,7 +53,7 @@
                     <tbody>
                     <tr v-for="(item, i) in info.planAchievements">
                         <td>{{ i + 1}}</td>
-                        <td>{{$moment(item.data).format('DD-MM-YYYY')}}</td>
+                        <td>{{$moment(item.date).format('DD-MM-YYYY')}}</td>
                         <td>{{item.sum}}</td>
                         <td>{{item.comment}}</td>
                         <td v-if="isAdmin">{{item.responsible.fio}}</td>
@@ -79,16 +79,19 @@
                     sum: 0,
                     comment: null,
                     projectId: 0
-                }
+                },
+                disabled: false
             }
         },
         created(){
         },
         methods: {
             save(){
+                this.disabled = true;
                 this.$v.model.$touch();
                 if(this.$v.model.$invalid){
-                    this.errorNotify("Форма не правильно заполнено!!!")
+                    this.errorNotify("Форма не правильно заполнено!!!");
+                    this.disabled = false;
                     return;
                 }
                 this.model.projectId = this.info.id;
@@ -96,12 +99,14 @@
                     response => {
                         this.$v.$reset();
                         this.info.planAchievements.push(response.data.result)
-                        this.model = this.resetModel()
+                        this.model = this.resetModel();
                     },
                     error => {
                         this.errorNotify(error.response.data.error.errorMessage)
                     }
-                )
+                ).finally(() =>{
+                    this.disabled = false;
+                })
             },
             deleteItem(index){
                 if(!confirm("Вы действительно хотите удалить?")){
