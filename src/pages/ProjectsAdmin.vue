@@ -43,7 +43,7 @@
 <!--                                    <input class="form-control" v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">-->
                                 </div>
                                 <div v-if="isAdmin">
-                                    <button class="btn btn-default" @click="show">Добавить объект</button>
+                                    <button class="btn btn-default" @click="addObjectModal">Добавить объект</button>
                                 </div>
                             </div>
                         </div>
@@ -173,6 +173,12 @@
         </div>
 
         <modal name="projectMainInfo" :adaptive="true" width="50%" height="80%">
+            <div class="modal-header">
+                <h5 class="modal-title">{{info.id > 0 ? 'Редактирование объекта' : 'Добавление объекта'}}</h5>
+                <button type="button" class="close"  @click="closeModal('projectMainInfo')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="object-form-section">
                 <ul class="nav nav-pills nav-fill object-form-items">
                     <li class="nav-item"  @click="openMainSection">
@@ -192,6 +198,12 @@
         </modal>
     
         <modal name="projectInfoModal" :adaptive="true" width="50%" height="80%">
+            <div class="modal-header">
+                <h5 class="modal-title">{{'Объект "'+info.shortDescription + '"'}}</h5>
+                <button type="button" class="close"  @click="closeModal('projectInfoModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="object-form-section">
                 <ul class="nav nav-pills nav-fill object-form-items">
                     <li class="nav-item"  @click="openMainSection">
@@ -523,13 +535,7 @@
 
                 return sum;
             },
-            show () {
-                this.openMainSection();
-                this.$modal.show('projectMainInfo');
-            },
-            hide () {
-                this.$modal.hide('projectMainInfo');
-            },
+
             switchingModal(info, toUpdate = false){
                 let hide = "projectMainInfo";
                 let show = "projectInfoModal";
@@ -581,7 +587,32 @@
             },
             getMonth(){
                 return  ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
-            }
+            },
+            closeModal(modal){
+                this.$modal.hide(modal);
+            },
+            addObjectModal(){
+                this.info = {
+                    description: '',
+                    shortDescription: "",
+                    contractNumber: "",
+                    contractDate: null,
+                    customer: "",
+                    contractProvider: "",
+                    contractPrice: '',
+                    techSupervision: "",
+                    techSupervisionPhone: "",
+                    responsible: {}
+                };
+                this.show()
+            },
+            show () {
+                this.openMainSection();
+                this.$modal.show('projectMainInfo');
+            },
+            hide () {
+                this.$modal.hide('projectMainInfo');
+            },
         },
         computed:{
 

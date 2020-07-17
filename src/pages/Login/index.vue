@@ -84,4 +84,10 @@
     background-image: url("/img/sidebar-2.32103624.jpg");
     background-size: cover;
 }
+@media (max-width: 480px), (max-width: 767px){
+    .form-group .form-control {
+        width: 100%;
+    }
+}
+
 </style>
