@@ -5,6 +5,8 @@
         <h3 class="md-title">{{ $route.name }}</h3>
       </div>
       <div class="md-toolbar-section-end">
+
+
         <md-button
           class="md-just-icon md-simple md-toolbar-toggle"
           :class="{ toggled: $sidebar.showSidebar }"

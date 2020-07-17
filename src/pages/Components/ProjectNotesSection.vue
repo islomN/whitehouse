@@ -15,25 +15,31 @@
                 </div>
             </div>
 
-            <div class=" mt-5">
-                <table  class="table">
-                    <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Коментария</th>
-                        <th>Дата добавления</th>
-                        <th v-if="isAdmin">ПТО</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(item, i) in info.projectNotes">
-                        <td>{{ i + 1}}</td>
-                        <td>{{item.note}}</td>
-                        <td>{{$moment(item.date).format('DD-MM-YYYY HH:mm')}}</td>
-                        <td v-if="isAdmin">{{item.responsible.fio}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="md-card-content mt-5">
+                <div>
+                    <div class="md-content md-table md-theme-default" >
+                        <div class="md-content md-table-content md-scrollbar md-theme-default">
+                            <table  class="table">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Коментария</th>
+                                    <th>Дата добавления</th>
+                                    <th v-if="isAdmin">ПТО</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item, i) in info.projectNotes">
+                                    <td>{{ i + 1}}</td>
+                                    <td>{{item.note}}</td>
+                                    <td>{{$moment(item.date).format('DD-MM-YYYY HH:mm')}}</td>
+                                    <td v-if="isAdmin">{{item.responsible.fio}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </md-card-content>
     </div>

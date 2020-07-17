@@ -43,7 +43,7 @@
 <!--                                    <input class="form-control" v-model="form.userId" @keypress="eCode" @input="getAllProject" type="text">-->
                                 </div>
                                 <div v-if="isAdmin">
-                                    <button class="btn btn-default" @click="addObjectModal">Добавить объект</button>
+                                    <button class="btn btn-default add-object-btn" @click="addObjectModal">Добавить объект</button>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                    class="btn excelBtn"
                                    worksheet="My Worksheet">
                                 <i class="icon-excel"></i>
-                                <button class="btn btn-success" @click="toExcel">Скачать</button>
+                                <button class="btn btn-success " @click="toExcel">Скачать</button>
                             </excel>
 
                         </div>
@@ -711,7 +711,7 @@
     }
     .object-form-section{
         width: 100%;
-        height: 100%;
+        height: calc(100% - 50px);
         padding: 20px;
     }
     .object-form-items a{
@@ -775,4 +775,26 @@
     .search-section input, .search-section select{
         background: white;
     }
+    .search-section > div{
+        min-width: 250px;
+        margin-bottom: 5px;
+
+    }
+    .search-section .add-object-btn{
+        height: 42px;
+        min-width: 250px;
+    }
+
+    @media (max-width: 480px), (max-width: 600px) {
+        .search-section > div {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .search-section  button{
+            width: 100%;
+        }
+    }
+
+
+
 </style>

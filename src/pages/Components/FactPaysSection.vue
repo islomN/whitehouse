@@ -43,33 +43,39 @@
                 </div>
             </div>
 
-            <div class=" mt-5">
-                <table  class="table">
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Дата</th>
-                            <th>Сумма</th>
-                            <th>Предоплата</th>
-                            <th>Коментария</th>
-                            <th v-if="isAdmin">ПТО</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, i) in info.factPays">
-                            <td>{{ i + 1}}</td>
-                            <td>{{$moment(item.date).format('DD-MM-YYYY')}}</td>
-                            <td>{{numeralFormat(item.sum)}}</td>
-                            <td class="text-success">{{item.isPrepay? "Предоплата":""}}</td>
-                            <td>{{item.comment}}</td>
-                            <td v-if="isAdmin">{{item.responsible.fio}}</td>
-                            <td class="actions">
-                                <span v-if="isAdmin" @click="deleteItem(i)" class="text-danger delete-item">Удалить</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="md-card-content mt-5">
+                <div>
+                    <div class="md-content md-table md-theme-default" >
+                        <div class="md-content md-table-content md-scrollbar md-theme-default">
+                            <table  class="table">
+                                <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Дата</th>
+                                        <th>Сумма</th>
+                                        <th>Предоплата</th>
+                                        <th>Коментария</th>
+                                        <th v-if="isAdmin">ПТО</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, i) in info.factPays">
+                                        <td>{{ i + 1}}</td>
+                                        <td>{{$moment(item.date).format('DD-MM-YYYY')}}</td>
+                                        <td>{{numeralFormat(item.sum)}}</td>
+                                        <td class="text-success">{{item.isPrepay? "Предоплата":""}}</td>
+                                        <td>{{item.comment}}</td>
+                                        <td v-if="isAdmin">{{item.responsible.fio}}</td>
+                                        <td class="actions">
+                                            <span v-if="isAdmin" @click="deleteItem(i)" class="text-danger delete-item">Удалить</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </md-card-content>
     </div>

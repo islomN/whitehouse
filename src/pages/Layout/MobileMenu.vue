@@ -1,8 +1,15 @@
 <template>
-
-
+  <ul class="nav nav-mobile-menu">
+    <li>
+      <a href="#" @click="logout">
+          <p class="">Выйти</p>
+      </a>
+    </li>
+  </ul>
 </template>
 <script>
+import TokenService from "../../services/TokenService";
+
 export default {
   data() {
     return {
@@ -19,6 +26,12 @@ export default {
         "Kevin Malone"
       ]
     };
-  }
+  },
+    methods:{
+        logout(){
+            TokenService.removeAll();
+            this.$router.push({ path: '/login' })
+        }
+    }
 };
 </script>

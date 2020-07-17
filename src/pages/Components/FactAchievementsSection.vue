@@ -111,32 +111,32 @@
                         <span>Загрузить</span>
                     </div>
                 </label>
+
+
                 <div v-else>
                     <div class="row">
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-6">
-                                    <input v-model="form.name" :class="{'border-danger':!form.name && touched}" class="form-control" type="text">
-                                </div>
-                                <div class="col-6">
-                                    <select v-model="form.FileCategoryInfo.id" :class="{'border-danger': !form.FileCategoryInfo.id && touched}" class="form-control">
-                                        <option v-for="item in fileCategoryList" :value="item.id">
-                                            {{item.name}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="col-xs-6  col-md-3 file-item">
+                            <input v-model="form.name" :class="{'border-danger':!form.name && touched}" class="form-control" type="text">
                         </div>
-                        <div class="col-6">
-                            <div class="d-flex flex-wrap align-items-center justify-content-between">
-                                <input style="width: calc(100% - 200px)" :value="selectedFile.name" class="form-control" disabled type="text">
-                                <button @click="selectedFile = {}" style="width: 80px; margin-left: 10px; margin-right: 10px" class="btn btn-danger">
-                                    Убрать
-                                </button>
-                                <button @click="save" style="width: 100px" class="btn btn-primary" :disabled="disabledFile">
-                                    Добавить
-                                </button>
-                            </div>
+                        <div class="col-xs-6 col-md-3  file-item">
+                            <select v-model="form.FileCategoryInfo.id" :class="{'border-danger': !form.FileCategoryInfo.id && touched}" class="form-control">
+                                <option v-for="item in fileCategoryList" :value="item.id">
+                                    {{item.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-2  file-item">
+                            <input :value="selectedFile.name" class="form-control" disabled type="text">
+                        </div>
+                        <div class="col-xs-2 col-md-2 file-item">
+                            <button @click="selectedFile = {}" class="btn btn-danger col-12">
+                                Убрать
+                            </button>
+                        </div>
+                        <div class="col-xs-2 col-md-2 file-item">
+                            <button @click="save"  class="btn btn-primary col-12" :disabled="disabled">
+                                Добавить
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -430,5 +430,15 @@
 .btn-file:active{
     box-shadow: 0 0 0 1px #3d8c40;
     color: #3d8c40;
+}
+.file-item{
+    margin-top: 3px;
+    height: 38px;
+}
+.file-item .form-control{
+    border: 1px solid #ced4da;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
 }
 </style>
