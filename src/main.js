@@ -39,7 +39,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import notificationMixin from "./mixins/notificationMixin";
 
-let url = 'http://testapp.uz:10000/';
+let url = 'http://195.158.9.179:30020/';
 store.commit('setBaseUrl', url);
 const axiosInstance = axios.create({
   baseURL: url,
