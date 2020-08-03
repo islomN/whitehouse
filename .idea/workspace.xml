@@ -19,8 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdffebda-d61d-463e-9e18-237460dac090" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="bdffebda-d61d-463e-9e18-237460dac090" name="Default Changelist" comment="change forms, add disabled action">
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Components/FactAchievementsSection.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Components/FactAchievementsSection.vue" afterDir="false" />
