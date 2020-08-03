@@ -8,12 +8,12 @@
 					<md-card-header data-background-color="green">
 						<div class="d-flex flex-wrap align-items-center justify-content-between">
 							<h4 class="title">Категории Файлов</h4>
-							<form @submit.prevent="save" class="d-flex align-items-center">
-								<input v-model="name" type="text" class="form-control mr-2" placeholder="Намиенование">
-								<button type="submit" class="btn btn-default" :disabled="disabled">
+							<form @submit.prevent="save" class="d-flex align-items-center form-add">
+								<input v-model="name" type="text" class="form-control mr-2 item" placeholder="Намиенование">
+								<button type="submit" class="btn btn-default item" :disabled="disabled">
 									Добавить
 								</button>
-							</form>
+                            </form>
 						</div>
 						
 						<!--            <p class="category">Here is a subtitle for this table</p>-->
@@ -97,4 +97,30 @@
     .form-control{
         background: white;
     }
+
+    @media (max-width: 991px){
+        .form-add {
+            width: 70% !important;
+            overflow-y: auto!important;
+            top: 15% !important;
+            left:  15% !important;
+            height: 70% !important;
+        }
+    }
+    @media screen and (max-width: 600px) {
+        body {
+            background-color: olive;
+        }
+    }
+
+    @media (max-width: 480px), (max-width: 600px) {
+        .form-add {
+            width: 100% !important;
+        }
+
+        .form-add .item{
+            justify-items: left;
+        }
+    }
+
 </style>

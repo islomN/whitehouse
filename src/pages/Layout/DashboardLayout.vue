@@ -6,20 +6,20 @@
       :sidebar-item-color="sidebarBackground"
       :sidebar-background-image="sidebarBackgroundImage"
     >
-      <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/dashboard">
-        <md-icon>dashboard</md-icon>
-        <p>Объекты</p>
-      </sidebar-link>
-    <sidebar-link v-if="isAdmin" to="/user">
-        <md-icon>bubble_chart</md-icon>
-        <p>Пользователи</p>
-    </sidebar-link>
+        <sidebar-link to="/dashboard">
+            <md-icon>dashboard</md-icon>
+            <p>Объекты</p>
+        </sidebar-link>
+        <sidebar-link v-if="isAdmin" to="/user">
+            <md-icon>bubble_chart</md-icon>
+            <p>Пользователи</p>
+        </sidebar-link>
 
-    <sidebar-link v-if="isAdmin" to="/file-categories">
-        <md-icon>bubble_chart</md-icon>
-        <p>Категории Файлов</p>
-    </sidebar-link>
+        <sidebar-link v-if="isAdmin" to="/file-categories">
+            <md-icon>bubble_chart</md-icon>
+            <p>Категории Файлов</p>
+        </sidebar-link>
+        <mobile-menu></mobile-menu>
 
     </side-bar>
 

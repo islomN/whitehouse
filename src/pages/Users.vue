@@ -37,7 +37,14 @@
             </div>
         </div>
         <modal name="addEditUser" :adaptive="true" width="50%" height="80%">
+            <div class="modal-header">
+                <h5 class="modal-title">{{form.id > 0 ? 'Редактирование пользователя' : 'Добавление пользователя'}}</h5>
+                <button type="button" class="close"  @click="closeModal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="object-form-section">
+
                 <div class="sections">
                     <div>
                         <md-card-content>
@@ -198,6 +205,9 @@
                         console.log(err.response);
                     }
                 )
+            },
+            closeModal(){
+                this.$modal.hide('addEditUser');
             }
         }
     }
@@ -211,4 +221,5 @@
     .form-control.input-mask{
         border: 0;
     }
+
 </style>

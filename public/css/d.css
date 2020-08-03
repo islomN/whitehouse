@@ -2,7 +2,56 @@
     border-color: red!important;
     border: 1px solid !important;
 }
+
 .vm--modal {
     width: 800px!important;
     overflow-y: auto!important;
+}
+
+.modal-header{
+    position: fixed;
+    height: 50px;
+    width: 800px ;
+    background: white;
+    z-index: 10000;
+}
+.object-form-section{
+    margin-top:  50px;
+}
+
+@media (max-width: 991px){
+    .vm--modal {
+        width: 70% !important;
+        overflow-y: auto!important;
+        top: 15% !important;
+        left:  15% !important;
+        height: 70% !important;
+    }
+
+    .modal-header{
+        width: 70% ;
+    }
+}
+
+@media (max-width: 480px), (max-width: 767px){
+    .vm--modal {
+        top: 5% !important;
+        left: 5% !important;
+        width: 90%  !important;
+        height: 90%  !important;
+    }
+}
+
+@media (max-width: 480px), (max-width: 767px){
+    .modal-header{
+        position: fixed;
+        height: 50px;
+        width: 90%;
+
+        background: white;
+        z-index: 10000;
+    }
+    .object-form-section{
+        margin-top:  50px;
+    }
 }
