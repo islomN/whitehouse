@@ -1,7 +1,7 @@
 <template>
     <div v-if="info.id">
         <template v-if="show === 'allInfo'">
-            <div v-if="!isAdmin" class="mb-3 mt-2">
+            <div v-if="isResponsible" class="mb-3 mt-2">
                 <div class="md-layout">
 
                     <div class="md-layout-item md-small-size-100 md-size-33">
@@ -103,7 +103,7 @@
                     Назад
                 </span>
             </div>
-            <div v-if="!isAdmin">
+            <div v-if="isResponsible">
                 <label v-if="!selectedFile.name" class="file-upload" style="cursor: pointer">
                     <input type="file" @change="takeFile" class="d-none">
                     <div class="d-flex d-flex justify-content-center icon btn btn-file">

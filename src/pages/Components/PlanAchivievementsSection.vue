@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-card-content>
-            <div v-if="!isAdmin" class="md-layout">
+            <div v-if="isResponsible" class="md-layout">
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Дата *</label>
@@ -49,7 +49,7 @@
                                     <th>Дата</th>
                                     <th>Сумма</th>
                                     <th>Коментария</th>
-                                    <th v-if="isAdmin">ПТО</th>
+                                    <th v-if="isAdmin ">ПТО</th>
                                     <th></th>
                                 </tr>
                                 </thead>

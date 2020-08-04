@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-card-content>
-            <div v-if="!isAdmin" class="md-layout" >
+            <div v-if="isResponsible" class="md-layout" >
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label>Дата *</label>
@@ -49,7 +49,7 @@
                                     <th>Дата</th>
                                     <th>Сумма</th>
                                     <th>Коментария</th>
-                                    <th v-if="isAdmin">ПТО</th>
+                                    <th v-if="isAdmin ">ПТО</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -58,7 +58,7 @@
                                 <tr v-for="(item, i) in info.factExpenses">
                                     <td>{{ i + 1}}</td>
                                     <td>{{$moment(item.date).format('DD-MM-YYYY')}}</td>
-                                    <td>{{item.sum}}</td>
+                                    <td>{{numeralFormat(item.sum)}}</td>
                                     <td>{{item.comment}}</td>
                                     <td  v-if="isAdmin">{{item.responsible.fio}}</td>
                                     <td class="actions">
