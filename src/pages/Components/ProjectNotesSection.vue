@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-card-content>
-            <div v-if="!isAdmin" class="md-layout">
+            <div v-if="isResponsible" class="md-layout">
                 <div class="md-layout-item md-small-size-100 md-size-100">
                     <md-field>
                         <label>Комментария</label>
@@ -25,7 +25,7 @@
                                     <th>№</th>
                                     <th>Коментария</th>
                                     <th>Дата добавления</th>
-                                    <th v-if="isAdmin">ПТО</th>
+                                    <th v-if="isAdmin ">ПТО</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,7 +33,7 @@
                                     <td>{{ i + 1}}</td>
                                     <td>{{item.note}}</td>
                                     <td>{{$moment(item.date).format('DD-MM-YYYY HH:mm')}}</td>
-                                    <td v-if="isAdmin">{{item.responsible.fio}}</td>
+                                    <td v-if="isAdmin ">{{item.responsible.fio}}</td>
                                 </tr>
                                 </tbody>
                             </table>

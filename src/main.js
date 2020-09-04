@@ -82,8 +82,16 @@ Vue.mixin(notificationMixin);
 Vue.mixin({
   computed: {
     isAdmin() {
-      let userId = localStorage.getItem('userType');
-      return userId*1 === 1;
+      let userType = localStorage.getItem('userType');
+      return userType*1 === 1;
+    },
+    isResponsible(){
+      let userType = localStorage.getItem('userType');
+      return userType*1 === 0;
+    },
+    isObserver(){
+      let userType = localStorage.getItem('userType');
+      return userType*1 === 2;
     }
   }
 })

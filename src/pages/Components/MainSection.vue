@@ -63,11 +63,6 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <label>Тел номер *</label>
                     <input-mask v-model="info.techSupervisionPhone" class="form-control input-mask" mask="+(999) 99 999 99 99" maskChar=" "  :class="{'border-danger': $v.info.techSupervisionPhone.$error}"></input-mask>
-
-                    <!--<md-field>
-                        <label>Тел номер *</label>
-                        <md-input v-model="info.techSupervisionPhone" :class="{'border-danger': $v.info.techSupervisionPhone.$error}" type="text"></md-input>
-                    </md-field>-->
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
@@ -78,6 +73,10 @@
                             </md-option>
                         </md-select>
                     </md-field>
+                </div>
+                <div v-if="info.id > 0" class="md-layout-item md-small-size-100 md-size-33">
+                  <label for="isFinished">Завершён</label>
+                  <input v-model="info.isFinished" id="isFinished" type="checkbox" class="checkbox">
                 </div>
                 <div class="d-flex align-items-center justify-content-center mt-5 w-100">
                     <button @click="save" class="btn btn-success" :disabled="disabled">
@@ -141,7 +140,7 @@
             getAllUser() {
                 this.$api.get('/api/User/GetUsers').then(
                     response => {
-                        this.responsibles = response.data.result.users;
+                        this.responsibles = response.data.result.users.filter(i => i.userType === 0);
                     },
                     error => {
                         console.log(error.response);
@@ -210,5 +209,9 @@
 <style >
 .md-select-menu{
     z-index: 100000 !important;
+}
+.checkbox{
+  height: 20px;
+  width: 40px;
 }
 </style>

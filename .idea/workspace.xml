@@ -141,174 +141,15 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>Search...</find>
-      <find>fa fa-cog fa-2x</find>
-      <find>FixedPlu</find>
-      <find>https://www.creative-tim.com/product/vue-material-dashboard</find>
-      <find>toggleSidebar</find>
-      <find>isAdmin()</find>
-      <find>.border-danger</find>
-      <find>hide</find>
-      <find>openProjectInfoSection</find>
-      <find>notes</find>
-      <find>ProjectNotesSectionComponent</find>
-      <find>contractProvider</find>
-      <find>Объкты</find>
-      <find>currentPage</find>
-      <find>assets</find>
-      <find>delete axiosInstance.defaults.headers.common.Authorization;</find>
-      <find>deleteItem</find>
-      <find>sum</find>
-      <find>sum:{</find>
-      <find>swi</find>
-      <find>item.responsible.fio</find>
-      <find>temp</find>
-      <find>еў</find>
-      <find>width: 800px!important;</find>
-      <find>d.css</find>
-      <find>openMainSection</find>
-      <find>.object-form-section</find>
-      <find>show</find>
-      <find>width: 100px;</find>
-      <find>md-toolbar-section-end</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>isAdmin</replace>
-      <replace>openFactExpensesSection</replace>
-      <replace>Объекты</replace>
-      <replace>note</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/store.js" />
-        <option value="$PROJECT_DIR$/src/routes/routes.js" />
-        <option value="$PROJECT_DIR$/public/d.css" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/mixins/notificationMixin.js" />
-        <option value="$PROJECT_DIR$/src/App.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Layout/Content.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Layout/ContentFooter.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Layout/Extra/FixedPlugin.vue" />
-        <option value="$PROJECT_DIR$/src/components/SidebarPlugin/SideBar.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Projects.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Logout.vue" />
-        <option value="$PROJECT_DIR$/src/services/TokenService.js" />
-        <option value="$PROJECT_DIR$/src/router.js" />
-        <option value="$PROJECT_DIR$/src/pages/Components/MainSection.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Components/ProjectInfo.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Login/index.vue" />
-        <option value="$PROJECT_DIR$/src/pages/FileCategories.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Components/FactPaysSection.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Components/FactExpensessSection.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Components/PlanAchivievementsSection.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Components/ProjectNotesSection.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Users.vue" />
-        <option value="$PROJECT_DIR$/public/css/d.css" />
-        <option value="$PROJECT_DIR$/src/pages/Components/ProjectFileSectionComponent.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Components/FactAchievementsSection.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Layout/TopNavbar.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Layout/DashboardLayout.vue" />
-        <option value="$PROJECT_DIR$/src/pages/Layout/MobileMenu.vue" />
-        <option value="$PROJECT_DIR$/src/pages/ProjectsAdmin.vue" />
-        <option value="$PROJECT_DIR$/src/main.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
-      </list>
-    </option>
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-683" />
-    <option name="y" value="-15" />
-    <option name="width" value="1936" />
-    <option name="height" value="1066" />
-  </component>
   <component name="ProjectId" id="1ddhkf6vdC3dErZiDX4kYMMUrwI" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mixins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="Components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="Layout" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="Login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="UserProfile" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="whitehouse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="whitehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -345,18 +186,6 @@
       <recent name="D:\FrontProjects\Other\whitehouse\public\css" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="npm.serve">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -380,11 +209,12 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build" />
         <item itemvalue="npm.serve" />
+        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -428,6 +258,10 @@
       <workItem from="1595003297497" duration="741000" />
       <workItem from="1595221295688" duration="109000" />
       <workItem from="1595350118323" duration="2772000" />
+      <workItem from="1595441712502" duration="737000" />
+      <workItem from="1596569668870" duration="12000" />
+      <workItem from="1596569725307" duration="23000" />
+      <workItem from="1596569798322" duration="7361000" />
       <workItem from="1595441712502" duration="1382000" />
     </task>
     <task id="LOCAL-00001" summary="changes">

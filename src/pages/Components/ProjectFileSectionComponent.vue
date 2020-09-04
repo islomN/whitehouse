@@ -1,6 +1,6 @@
 <template>
     <div v-if="info.id">
-        <template v-if="!isAdmin">
+        <template v-if="isResponsible">
             <label v-if="!selectedFile.name" class="file-upload" style="cursor: pointer">
                 <input type="file" @change="takeFile" class="d-none">
                 <div class="d-flex d-flex justify-content-center icon btn btn-file">
@@ -79,7 +79,7 @@
                                         <a :href="item.url" target="_blank" download>Скачать</a>
                                     </div>
                                 </td>
-                                <td v-if="isAdmin" class="md-table-cell">
+                                <td v-if="isAdmin " class="md-table-cell">
                                     <div class="md-table-cell-container">{{item.responsible.fio}}</div>
                                 </td>
 

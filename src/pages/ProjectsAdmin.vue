@@ -8,7 +8,7 @@
                     <md-card-header data-background-color="green">
                         <div class="d-flex flex-wrap justify-content-between align-items-center">
                             <h4 class="title">Объекты</h4>
-                            <div class="d-flex align-items-center flex-wrap search-section" v-if="isAdmin">
+                            <div class="d-flex align-items-center flex-wrap search-section" v-if="isAdmin ">
 
                                 <div>
                                     <VueCtkDateTimePicker class="my_VueCtkDateTimePicker"
@@ -85,35 +85,35 @@
                                             <th class="md-table-head">
                                                 <div class="md-table-head-container md-ripple md-disabled">
                                                     <div class="md-table-head-label">
-                                                        Договор
+                                                        Факт оплата
                                                     </div>
                                                 </div>
                                             </th>
                                             <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
                                                 <div class="md-table-head-label">
-                                                    Заказчик
+                                                    Факт выполнения
                                                 </div>
                                             </div>
                                             </th>
 
-                                            <th class="md-table-head"><div class="md-table-head-container md-ripple md-disabled">
-                                                <div class="md-table-head-label">
-
-                                                    Стоимость по договору (СМР)
-                                                </div>
-                                            </div>
-                                            </th>
-                                            <th class="md-table-head w-30">
+                                            <th class="md-table-head">
                                                 <div class="md-table-head-container md-ripple md-disabled">
                                                     <div class="md-table-head-label">
-                                                        Факт выполнения
+                                                        План выполнения
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="md-table-head">
+                                                <div class="md-table-head-container md-ripple md-disabled">
+                                                    <div class="md-table-head-label">
+                                                        Факт расход
                                                     </div>
                                                 </div>
                                             </th>
                                             <th class="md-table-head w-30">
                                                 <div class="md-table-head-container md-ripple md-disabled">
                                                     <div class="md-table-head-label">
-                                                        Ожидание ({{getMonthName()}})
+                                                        Задолженность  95%
                                                     </div>
                                                 </div>
                                             </th>
@@ -127,8 +127,8 @@
                                             </th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr v-for="(item,i) in projects" class="md-table-row">
+                                        <tbody >
+                                        <tr  v-for="(item,i) in projects" class="md-table-row" :class="{is_finished: item.isFinished}">
                                             <td class="md-table-cell">
                                                 <div class="md-table-cell-container">{{i+1}} </div>
                                             </td>
@@ -136,21 +136,22 @@
                                                 <div class="md-table-cell-container">{{item.shortDescription}} </div>
                                             </td>
                                             <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{item.contractNumber}}</div>
+                                                <div class="md-table-cell-container">{{numeralFormat(calcFactPays(item))}}</div>
                                             </td>
                                             <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{item.customer}}</div>
-                                            </td>
-
-                                            <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{numeralFormat(item.contractPrice)}}</div>
+                                                <div class="md-table-cell-container">{{numeralFormat(calcFactAchievements(item))}}</div>
                                             </td>
 
                                             <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{numeralFormat(calcFactAchievements(item))}} </div>
+                                                <div class="md-table-cell-container">{{numeralFormat(calcPlanAchievements(item))}}</div>
                                             </td>
+
                                             <td class="md-table-cell">
-                                                <div class="md-table-cell-container">{{numeralFormat(calcPlanAchievements(item))}} </div>
+                                                <div class="md-table-cell-container">{{numeralFormat(calcFactExpenses(item))}}</div>
+                                            </td>
+
+                                            <td class="md-table-cell">
+                                                <div class="md-table-cell-container">{{numeralFormat(calcDebt(item))}} </div>
                                             </td>
 
                                             <td class="md-table-cell">
@@ -160,8 +161,9 @@
                                             </td>
                                         </tr>
                                         </tbody>
+
                                     </table>
-                                    <div v-if="!isAdmin && pagination.count > pagination.size">
+                                    <div v-if="!isAdmin && pagination.count >1" class="pagination-section">
                                         <v-pagination v-model="pagination.page" :page-count="pagination.count"></v-pagination>
                                     </div>
                                 </div>
@@ -199,7 +201,7 @@
     
         <modal name="projectInfoModal" :adaptive="true" width="50%" height="80%">
             <div class="modal-header">
-                <h5 class="modal-title">{{'Объект "'+info.shortDescription + '"'}}</h5>
+                <h5 class="modal-title">{{'Объект "'+info.shortDescription + '"'}} <span v-if="info.isFinished" class="is_finished_span">Завершён</span></h5>
                 <button type="button" class="close"  @click="closeModal('projectInfoModal')">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -346,7 +348,7 @@
         created() {
             this.getAllProject();
 
-            if(this.isAdmin){
+            if(this.isAdmin ){
                 this.getAllUser();
             }
         },
@@ -388,7 +390,7 @@
             getAllUser() {
                 this.$api.get('/api/User/GetUsers').then(
                     response => {
-                        this.responsibles = response.data.result.users;
+                        this.responsibles = response.data.result.users.filter(i => i.userType === 0);
                     },
                     error => {
                         console.log(error.response);
@@ -416,8 +418,8 @@
                         factPrepay: this.calcPrepay(item),
                         factNoPrepay: this.calcNotPrepay(item),
                         factAllpay:this.calcAllpay(item),
-                        fivePersent: this.calcFactAchievements(item) * 5/100,
-                        debt: this.calcFactAchievements(item)  -  this.calcFactAchievements(item) * 5/100 - this.calcAllpay(item),
+                        fivePersent: this.calcFivePercent(item),
+                        debt: this.calcDebt(item) ,
                     };
 
                     info['projectNote'] = '';
@@ -481,6 +483,21 @@
             getMonthName(){
                 return this.getMonth()[new Date().getMonth()]
             },
+            calcDebt(item){
+                return (this.calcFactAchievements(item)  -  this.calcFivePercent(item)  - this.calcAllpay(item)).toFixed(2)
+            },
+            calcFivePercent(item){
+                return (this.calcFactAchievements(item) * 5/100).toFixed(2);
+            },
+            calcFactPays(item){
+                let sum = 0;
+
+                for(let i in item.factPays){
+                    sum+= item.factPays[i].sum
+                }
+
+                return sum.toFixed(2)*1;
+            },
             calcFactAchievements(item){
                 let sum = 0;
 
@@ -488,7 +505,7 @@
                     sum+= item.factAchievements[i].sum
                 }
 
-                return sum;
+                return sum.toFixed(2)*1;
             },
             calcPlanAchievements(item){
                 let sum = 0;
@@ -497,16 +514,16 @@
                     sum+= item.planAchievements[i].sum
                 }
 
-                return sum;
+                return sum.toFixed(2)*1;
             },
             calcFactExpenses(item){
                 let sum = 0;
 
                 for(let i in item.factExpenses){
-                    sum+= item.factExpenses[i].sum
+                    sum+= item.factExpenses[i].sum *1
                 }
 
-                return sum;
+                return sum.toFixed(2)*1;
             },
             calcPrepay(item){
                 let sum = 0;
@@ -515,7 +532,7 @@
                     sum+= item.factPays[i].sum
                 }
 
-                return sum;
+                return sum.toFixed(2)*1;
             },
             calcNotPrepay(item){
                 let sum = 0;
@@ -524,7 +541,7 @@
                     sum+= item.factPays[i].sum
                 }
 
-                return sum;
+                return sum.toFixed(2)*1;
             },
             calcAllpay(item){
                 let sum = 0;
@@ -533,7 +550,7 @@
                     sum+= item.factPays[i].sum
                 }
 
-                return sum;
+                return sum.toFixed(2)*1;
             },
 
             switchingModal(info, toUpdate = false){
@@ -748,6 +765,20 @@
     }
     .form-control{
         min-width: 250px;
+    }
+    .is_finished{
+      background: #dee2e6;
+    }
+    .pagination-section{
+      margin-top: 20px;
+    }
+    .is_finished_span{
+      float: right;
+      color: #4caf50;
+      text-transform: uppercase;
+    }
+    h5.modal-title{
+      width: 100%;
     }
 </style>
 

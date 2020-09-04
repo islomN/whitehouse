@@ -7,7 +7,7 @@ export default {
             if(!val || isNaN(val)){
                 val = 0;
             }
-
+            val = (val* 1).toFixed(2) * 1;
             let delimiterIndex = val ? val.toString().indexOf('.'): -1;
 
             if(delimiterIndex!== -1 &&delimiterIndex < val.toString().length-3){
